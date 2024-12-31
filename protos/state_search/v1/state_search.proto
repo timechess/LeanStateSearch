@@ -2,6 +2,42 @@ syntax = "proto3";
 
 package state_search.v1;
 
+import "google/protobuf/timestamp.proto";
+
+// A theorem from Mathlib
+message Theorem {
+  string id = 1;
+  string name = 2;
+  string code = 3;
+  string rev = 4;
+  string module = 5;
+}
+
+// Service for searching.
 service LeanStateSearchService {
-  rpc
+  // Search theorem according to the query
+  rpc SearchTheorem(SearchTheoremRequest) returns (SearchTheoremResponse);
+  rpc Feedback(FeedbackRequest) returns (FeedbackResponse);
+}
+
+message SearchTheoremRequest {
+  string query = 1;
+  int32 nresult = 2;
+  bool rerank = 3;
+  string rev = 4;
+}
+
+message SearchTheoremResponse {
+    repeated Theorem results = 1;
+}
+
+message FeedbackRequest {
+  string query = 1;
+  string theorem_id = 2;
+  bool relevant = 3;
+  bool update = 4;
+}
+
+message FeedbackResponse {
+  google.protobuf.Timestamp update_time = 1;
 }

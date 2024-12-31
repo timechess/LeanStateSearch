@@ -19,7 +19,6 @@
         bubblewrap
         protobuf
         buf
-        elan
 
         caddy
       ]

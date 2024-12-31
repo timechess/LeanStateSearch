@@ -8,3 +8,19 @@ generator client {
   recursive_type_depth = -1
 }
 
+model Theorem {
+  id     String   @id @default(uuid())
+  name   String
+  args   String[]
+  goal   String
+  rev    String
+  module String
+}
+
+model FeedBack {
+  id          Int      @id @default(autoincrement())
+  query       String
+  theorem_id  String
+  relevant    Boolean
+  update_time DateTime
+}

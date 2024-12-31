@@ -6,12 +6,27 @@ authors = ["timechess <tyc221@ruc.edu.cn>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.11, <3.13"
 prisma = "^0.15.0"
 sentence-transformers = "^3.3.1"
 grpcio = "^1.68.1"
+fastapi-limiter = "^0.1.5"
+python-dotenv = "^1.0.0"
+bleach = "^6.1.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+exclude = [
+    "tests/",
+    "**/__pycache__/",
+    ".venv/",
+    "dist/",
+    "state_search"
+]

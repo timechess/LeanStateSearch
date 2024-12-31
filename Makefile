@@ -7,10 +7,10 @@ fmt:
 	(fd -e nix -X nixfmt {} \; -X alejandra -q {})
 	(cd protos && buf format -w)
 	(cd ${FRONTEND} && prettier . -w )
-	(cd ${BACKEND} && ruff format src)
+	(cd ${BACKEND} && ruff format .)
 
 lint:
-	(cd ${BACKEND} && ruff check src)
+	(cd ${BACKEND} && ruff check .)
 	(cd protos && buf lint)
 	(cd ${FRONTEND} && pnpm lint)
 
