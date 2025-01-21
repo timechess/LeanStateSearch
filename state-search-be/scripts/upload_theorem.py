@@ -26,7 +26,6 @@ async def main():
                 }
             )
     await db.theorem.create_many(data=theorems)
-    await db.revs.create(data={"rev": args.rev})
     await db.disconnect()
 
 
