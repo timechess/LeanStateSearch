@@ -34,7 +34,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
             context_embedding_path = os.path.join(embedding_path, "context_embedding")
             goal_embedding_path = os.path.join(embedding_path, "goal_embedding")
             rev_theorems = list(filter(lambda t: t.rev == rev, theorems))
-            index2uuid = dict(map(lambda i, t: (i, t.id), enumerate(rev_theorems)))
+            index2uuid = dict(map(lambda t: (t[0], t[1].id), enumerate(rev_theorems)))
             if not os.path.exists(embedding_path):
                 os.makedirs(embedding_path)
                 context_corpus = [
@@ -103,7 +103,11 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
         )
 
         theorems = await self.db.theorem.find_many(
-            where={"id": {"in": list(map(lambda x: index2uuid[x], indice.tolist()[0]))}}
+            where={
+                "id": {
+                    "in": list(map(lambda x: index2uuid[str(x)], indice.tolist()[0]))
+                }
+            }
         )
 
         def to_code(theorem):
