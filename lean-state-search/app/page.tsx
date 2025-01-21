@@ -1,17 +1,20 @@
 import { StateSearchResultTable } from "@/components/search-result";
 import SearchBox from "@/components/searchbox";
-import { redirect } from "next/navigation";
+import { getAllRev } from "@/lib/grpc";
 
-export default async function StateSearchSearchPage({
-  searchParams,
-}: {
-  searchParams?: {
+export default async function StateSearchSearchPage(props: {
+  searchParams?: Promise<{
     query?: string;
-  };
+    results?: string;
+    rev?: string;
+  }>;
 }) {
+  const searchParams = await props.searchParams;
 
   const query = searchParams?.query;
-
+  const results = Number.parseInt(searchParams?.results ?? "20");
+  const rev = searchParams?.rev;
+  const all_revs = (await getAllRev({})).revs;
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r">
       <main className="flex flex-col items-center justify-center px-4 text-center">
@@ -23,14 +26,14 @@ export default async function StateSearchSearchPage({
         </p>
 
         <div className="mx-auto py-10">
-          <SearchBox />
+          <SearchBox revs={all_revs} />
           {query ? (
             <div className="w-full mx-auto items-center mt-4">
               <StateSearchResultTable
                 query={query}
-                nresult={20}
+                nresult={results}
                 rerank={true}
-                rev="v4.10.0"
+                rev={rev ?? "v4.10.0"}
               />
             </div>
           ) : null}

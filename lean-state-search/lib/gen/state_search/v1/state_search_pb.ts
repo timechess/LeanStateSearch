@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
+import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
  * A theorem from Mathlib
@@ -66,6 +66,74 @@ export class Theorem extends Message<Theorem> {
 
   static equals(a: Theorem | PlainMessage<Theorem> | undefined, b: Theorem | PlainMessage<Theorem> | undefined): boolean {
     return proto3.util.equals(Theorem, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.GetAllRevRequest
+ */
+export class GetAllRevRequest extends Message<GetAllRevRequest> {
+  constructor(data?: PartialMessage<GetAllRevRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.GetAllRevRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAllRevRequest {
+    return new GetAllRevRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAllRevRequest {
+    return new GetAllRevRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAllRevRequest {
+    return new GetAllRevRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAllRevRequest | PlainMessage<GetAllRevRequest> | undefined, b: GetAllRevRequest | PlainMessage<GetAllRevRequest> | undefined): boolean {
+    return proto3.util.equals(GetAllRevRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.GetAllRevResponse
+ */
+export class GetAllRevResponse extends Message<GetAllRevResponse> {
+  /**
+   * @generated from field: repeated string revs = 1;
+   */
+  revs: string[] = [];
+
+  constructor(data?: PartialMessage<GetAllRevResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.GetAllRevResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "revs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAllRevResponse {
+    return new GetAllRevResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAllRevResponse {
+    return new GetAllRevResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAllRevResponse {
+    return new GetAllRevResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAllRevResponse | PlainMessage<GetAllRevResponse> | undefined, b: GetAllRevResponse | PlainMessage<GetAllRevResponse> | undefined): boolean {
+    return proto3.util.equals(GetAllRevResponse, a, b);
   }
 }
 
@@ -220,11 +288,6 @@ export class FeedbackRequest extends Message<FeedbackRequest> {
  * @generated from message state_search.v1.FeedbackResponse
  */
 export class FeedbackResponse extends Message<FeedbackResponse> {
-  /**
-   * @generated from field: google.protobuf.Timestamp update_time = 1;
-   */
-  updateTime?: Timestamp;
-
   constructor(data?: PartialMessage<FeedbackResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -233,7 +296,6 @@ export class FeedbackResponse extends Message<FeedbackResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "state_search.v1.FeedbackResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "update_time", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FeedbackResponse {

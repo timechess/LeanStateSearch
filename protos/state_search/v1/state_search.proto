@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package state_search.v1;
 
-import "google/protobuf/timestamp.proto";
-
 // A theorem from Mathlib
 message Theorem {
   string id = 1;
@@ -15,9 +13,18 @@ message Theorem {
 
 // Service for searching.
 service LeanStateSearchService {
-  // Search theorem according to the query
+  // Get all existing revs in database.
+  rpc GetAllRev(GetAllRevRequest) returns (GetAllRevResponse);
+  // Search theorem according to the query.
   rpc SearchTheorem(SearchTheoremRequest) returns (SearchTheoremResponse);
+  // Collect feedbacks from user.
   rpc Feedback(FeedbackRequest) returns (FeedbackResponse);
+}
+
+message GetAllRevRequest {}
+
+message GetAllRevResponse {
+  repeated string revs = 1;
 }
 
 message SearchTheoremRequest {
@@ -28,7 +35,7 @@ message SearchTheoremRequest {
 }
 
 message SearchTheoremResponse {
-    repeated Theorem results = 1;
+  repeated Theorem results = 1;
 }
 
 message FeedbackRequest {
@@ -38,6 +45,4 @@ message FeedbackRequest {
   bool update = 4;
 }
 
-message FeedbackResponse {
-  google.protobuf.Timestamp update_time = 1;
-}
+message FeedbackResponse {}

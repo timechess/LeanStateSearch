@@ -18,14 +18,14 @@ dev-fe:
 	(cd ${FRONTEND} && pnpm run dev)
 
 start-be:
-	(cd ${BACKEND} && poetry run main)
+	(cd ${BACKEND} && python main.py)
 
 build-fe:
 	(cd ${FRONTEND} && docker build -t ${FRONTEND}:latest .)
 
 init-service:
 	(cd scripts && docker compose up --wait)
-	(./scripts/init-pg.sh)
+	(sleep 5 && ./scripts/init-pg.sh)
 
 proto:
 	(cd protos && buf generate)

@@ -15,6 +15,11 @@ class LeanStateSearchServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.GetAllRev = channel.unary_unary(
+                '/state_search.v1.LeanStateSearchService/GetAllRev',
+                request_serializer=state__search_dot_v1_dot_state__search__pb2.GetAllRevRequest.SerializeToString,
+                response_deserializer=state__search_dot_v1_dot_state__search__pb2.GetAllRevResponse.FromString,
+                _registered_method=True)
         self.SearchTheorem = channel.unary_unary(
                 '/state_search.v1.LeanStateSearchService/SearchTheorem',
                 request_serializer=state__search_dot_v1_dot_state__search__pb2.SearchTheoremRequest.SerializeToString,
@@ -31,15 +36,23 @@ class LeanStateSearchServiceServicer(object):
     """Service for searching.
     """
 
+    def GetAllRev(self, request, context):
+        """Get all existing revs in database.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def SearchTheorem(self, request, context):
-        """Search theorem according to the query
+        """Search theorem according to the query.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Feedback(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Collect feedbacks from user.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -47,6 +60,11 @@ class LeanStateSearchServiceServicer(object):
 
 def add_LeanStateSearchServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'GetAllRev': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllRev,
+                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.GetAllRevRequest.FromString,
+                    response_serializer=state__search_dot_v1_dot_state__search__pb2.GetAllRevResponse.SerializeToString,
+            ),
             'SearchTheorem': grpc.unary_unary_rpc_method_handler(
                     servicer.SearchTheorem,
                     request_deserializer=state__search_dot_v1_dot_state__search__pb2.SearchTheoremRequest.FromString,
@@ -68,6 +86,33 @@ def add_LeanStateSearchServiceServicer_to_server(servicer, server):
 class LeanStateSearchService(object):
     """Service for searching.
     """
+
+    @staticmethod
+    def GetAllRev(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/state_search.v1.LeanStateSearchService/GetAllRev',
+            state__search_dot_v1_dot_state__search__pb2.GetAllRevRequest.SerializeToString,
+            state__search_dot_v1_dot_state__search__pb2.GetAllRevResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
 
     @staticmethod
     def SearchTheorem(request,

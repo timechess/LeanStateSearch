@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { FeedbackRequest, FeedbackResponse, SearchTheoremRequest, SearchTheoremResponse } from "./state_search_pb.ts";
+import { FeedbackRequest, FeedbackResponse, GetAllRevRequest, GetAllRevResponse, SearchTheoremRequest, SearchTheoremResponse } from "./state_search_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -15,7 +15,18 @@ export const LeanStateSearchService = {
   typeName: "state_search.v1.LeanStateSearchService",
   methods: {
     /**
-     * Search theorem according to the query
+     * Get all existing revs in database.
+     *
+     * @generated from rpc state_search.v1.LeanStateSearchService.GetAllRev
+     */
+    getAllRev: {
+      name: "GetAllRev",
+      I: GetAllRevRequest,
+      O: GetAllRevResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Search theorem according to the query.
      *
      * @generated from rpc state_search.v1.LeanStateSearchService.SearchTheorem
      */
@@ -26,6 +37,8 @@ export const LeanStateSearchService = {
       kind: MethodKind.Unary,
     },
     /**
+     * Collect feedbacks from user.
+     *
      * @generated from rpc state_search.v1.LeanStateSearchService.Feedback
      */
     feedback: {

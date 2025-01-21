@@ -19,8 +19,8 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: vgASaJGlnZ6uZ9VNAJtat0CSczn2v0NAKHDYPrOtZWaD5XFbos8cc72cTj6s
-    # ports:
-    #   - 5432:5432
-    network_mode: "host"
+    ports:
+      - 5432:5432
+    # network_mode: "host"
     volumes:
       - ~/.docker/.persist/state-search/pg-data:/var/lib/postgresql/data

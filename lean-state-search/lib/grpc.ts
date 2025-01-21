@@ -11,6 +11,8 @@ import { toPlainMessage, type PlainMessage } from "@bufbuild/protobuf";
 import { LeanStateSearchService } from "./gen/state_search/v1/state_search_connect";
 
 import type {
+  GetAllRevRequest,
+  GetAllRevResponse,
   SearchTheoremRequest,
   SearchTheoremResponse,
   FeedbackRequest,
@@ -21,10 +23,16 @@ const grpcOptions: GrpcTransportOptions = {
   baseUrl: "http://127.0.0.1:7720",
   httpVersion: "2",
 };
+
 const transport = createGrpcTransport(grpcOptions);
 
 const leanStateSearchServicer: Client<typeof LeanStateSearchService> =
   createClient(LeanStateSearchService, transport);
+
+export const getAllRev: (
+  request: PlainMessage<GetAllRevRequest>,
+) => Promise<PlainMessage<GetAllRevResponse>> = async (request) =>
+  toPlainMessage(await leanStateSearchServicer.getAllRev(request));
 
 export const searchTheorem: (
   request: PlainMessage<SearchTheoremRequest>,

@@ -18,9 +18,10 @@ model Theorem {
 }
 
 model FeedBack {
-  id          Int      @id @default(autoincrement())
-  query       String
-  theorem_id  String
-  relevant    Boolean
-  update_time DateTime
+  id         Int      @id @default(autoincrement())
+  query      String
+  theorem_id String
+  relevant   Boolean
+  createAt   DateTime @default(now())
+  updateAt   DateTime @updatedAt
 }

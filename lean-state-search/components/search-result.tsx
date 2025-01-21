@@ -1,7 +1,4 @@
-import {
-  searchTheorem,
-  feedback
-} from "@/lib/grpc";
+import { searchTheorem, feedback } from "@/lib/grpc";
 import { PlainMessage } from "@bufbuild/protobuf";
 import { Theorem } from "@/lib/gen/state_search/v1/state_search_pb";
 import {
@@ -14,7 +11,6 @@ import {
 import { codeToHtml } from "shiki";
 import { Button } from "./ui/button";
 import LikeDislikeToggle from "./button";
-
 
 async function MathlibTheoremCard({
   theorem,
@@ -84,17 +80,13 @@ export async function StateSearchResultTable({
   query: string;
   nresult: number;
   rerank: boolean;
-  rev: string,
+  rev: string;
 }) {
   const data = (await searchTheorem({ query, nresult, rerank, rev })).results;
   return (
     <div className="w-full">
       {data.map((theorem) => (
-        <MathlibTheoremCard
-          key={theorem.id}
-          theorem={theorem}
-          query={query}
-        />
+        <MathlibTheoremCard key={theorem.id} theorem={theorem} query={query} />
       ))}
     </div>
   );

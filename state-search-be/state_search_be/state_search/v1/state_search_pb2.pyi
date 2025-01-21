@@ -1,4 +1,3 @@
-from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -19,6 +18,16 @@ class Theorem(_message.Message):
     rev: str
     module: str
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., code: _Optional[str] = ..., rev: _Optional[str] = ..., module: _Optional[str] = ...) -> None: ...
+
+class GetAllRevRequest(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class GetAllRevResponse(_message.Message):
+    __slots__ = ("revs",)
+    REVS_FIELD_NUMBER: _ClassVar[int]
+    revs: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, revs: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class SearchTheoremRequest(_message.Message):
     __slots__ = ("query", "nresult", "rerank", "rev")
@@ -51,7 +60,5 @@ class FeedbackRequest(_message.Message):
     def __init__(self, query: _Optional[str] = ..., theorem_id: _Optional[str] = ..., relevant: bool = ..., update: bool = ...) -> None: ...
 
 class FeedbackResponse(_message.Message):
-    __slots__ = ("update_time",)
-    UPDATE_TIME_FIELD_NUMBER: _ClassVar[int]
-    update_time: _timestamp_pb2.Timestamp
-    def __init__(self, update_time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    __slots__ = ()
+    def __init__(self) -> None: ...
