@@ -25,7 +25,7 @@ export default async function StateSearchSearchPage(props: {
           Search Mathlib Theorem with Proof States
         </p>
 
-        <div className="mx-auto py-10">
+        <div className="mx-auto py-10 mt-10">
           <SearchBox revs={all_revs} />
           {query ? (
             <div className="w-full mx-auto items-center mt-4">

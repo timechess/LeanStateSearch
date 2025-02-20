@@ -6,15 +6,16 @@ from state_search_be.state_search.v1.state_search_pb2_grpc import (
     add_LeanStateSearchServiceServicer_to_server,
 )
 from prisma import Prisma
+from qdrant_client import QdrantClient
 
 
 async def serve() -> None:
     db = Prisma()
+    vb = QdrantClient("http://localhost:6333")
     await db.connect()
-    theorems = await db.theorem.find_many()
     server = grpc.aio.server()
     add_LeanStateSearchServiceServicer_to_server(
-        LeanStateSearchServicer(db=db, theorems=theorems), server
+        LeanStateSearchServicer(db=db, vb=vb), server
     )
 
     listen_addr = "[::]:7720"

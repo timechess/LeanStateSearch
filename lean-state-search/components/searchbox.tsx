@@ -14,11 +14,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
+const formSchema = z.object(
+  {
+    proofState: z.string()
+      .min(1, "Proof state is required")
+      .regex(/\⊢/, "Must contain ⊢"),
+    revision: z.string().min(1, "Please select a revision"),
+    resultNum: z.number().min(1).max(100).default(20)
+  }
+)
 export default function SearchBox(props: { revs: string[] }) {
-  const [inputValue, setInputValue] = useState("");
-  const [resultNum, setResultNum] = useState(20);
-  const [rev, setRev] = useState("");
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      proofState: "",
+      revision: "",
+      resultNum: 20
+    }
+  });
+
   const pathname = usePathname();
   const { replace } = useRouter();
   const handleSearch = (query: string, results: number, rev: string) => {
@@ -34,72 +53,110 @@ export default function SearchBox(props: { revs: string[] }) {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // 替换原来的 handleSearch
+    handleSearch(values.proofState, values.resultNum, values.revision);
+  }
+
   const handleClear = () => {
-    setInputValue("");
+    form.reset();
   };
 
-  const handleResultNum = (value: number[]) => {
-    setResultNum(value[0]);
-  };
 
-  const changeRev = (value: string) => {
-    setRev(value);
-  };
   return (
     <Card className="p-8 w-[1200px] max-w-6xl space-y-4 mx-auto border-black">
-      <div className="flex mx-4">
-        <CardTitle className="text-left mt-1">Query</CardTitle>
-        <span className="ml-4">
-          Your current proof state (You can copy it in VSCode)
-        </span>
-      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="flex mx-4">
+            <CardTitle className="text-left mt-1">Query</CardTitle>
+            <span className="ml-4">
+              Your current proof state (You can copy it in VSCode)
+            </span>
+          </div>
 
-      <Textarea
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter your proof state"
-        className="h-[200px] mt-4"
-      />
-      <div className="flex space-x-4 justify-between">
-        <Button
-          variant="outline"
-          onClick={handleClear}
-          className="w-1/4 border-black"
-        >
-          Clear
-        </Button>
-        <div className="text-left">
-          <p className="mb-2">Number of Results: {resultNum}</p>
-          <Slider
-            defaultValue={[20]}
-            max={100}
-            step={10}
-            onValueChange={handleResultNum}
-            title="Number of Results"
-            className="w-[360px]"
+          <FormField
+            control={form.control}
+            name="proofState"
+            render={({ field }) => (
+
+              <FormItem>
+                <FormMessage className="text-base ml-1 text-left" />
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Enter your proof state"
+                    className="h-[200px] mt-4"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
-        <Select onValueChange={changeRev}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a revision" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {props.revs.map((r) => (
-                <SelectItem key={r} value={r}>
-                  {r}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Button
-          onClick={() => handleSearch(inputValue, resultNum, rev)}
-          className="w-1/4"
-        >
-          Search
-        </Button>
-      </div>
+
+          <div className="flex space-x-4 justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClear}
+              className="w-1/4 border-black"
+            >
+              Clear
+            </Button>
+
+            <FormField
+              control={form.control}
+              name="resultNum"
+              render={({ field }) => (
+                <FormItem className="w-[360px]">
+                  <p className="mb-2">Number of Results: {field.value}</p>
+                  <FormControl>
+                    <Slider
+                      min={1}
+                      max={100}
+                      step={10}
+                      defaultValue={[field.value]}
+                      onValueChange={(v) => field.onChange(v[0])}
+                      title="Number of Results"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="revision"
+              render={({ field }) => (
+                <FormItem>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormMessage className="text-left ml-1" />
+                    <FormControl>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select a revision" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {props.revs.map((r) => (
+                          <SelectItem key={r} value={r}>
+                            {r}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" className="w-1/4">
+              Search
+            </Button>
+          </div>
+        </form>
+      </Form>
     </Card>
   );
+
+
 }

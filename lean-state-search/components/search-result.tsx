@@ -62,7 +62,7 @@ async function MathlibTheoremCard({
           <a
             href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem.name}#doc`}
           >
-            Go to doc{" "}
+            Go To Doc
           </a>
         </Button>
         <LikeDislikeToggle create={create} update={update} />

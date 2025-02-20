@@ -18,7 +18,7 @@ dev-fe:
 	(cd ${FRONTEND} && pnpm run dev)
 
 start-be:
-	(cd ${BACKEND} && python main.py)
+	(cd ${BACKEND} && poetry run python main.py)
 
 build-fe:
 	(cd ${FRONTEND} && docker build -t ${FRONTEND}:latest .)
