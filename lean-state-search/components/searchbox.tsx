@@ -25,7 +25,7 @@ const formSchema = z.object(
       .min(1, "Proof state is required")
       .regex(/\⊢/, "Must contain ⊢"),
     revision: z.string().min(1, "Please select a revision"),
-    resultNum: z.number().min(1).max(100).default(20)
+    resultNum: z.number().min(10).max(100).default(20)
   }
 )
 export default function SearchBox(props: { revs: string[] }) {
@@ -110,7 +110,7 @@ export default function SearchBox(props: { revs: string[] }) {
                   <p className="mb-2">Number of Results: {field.value}</p>
                   <FormControl>
                     <Slider
-                      min={1}
+                      min={10}
                       max={100}
                       step={10}
                       defaultValue={[field.value]}

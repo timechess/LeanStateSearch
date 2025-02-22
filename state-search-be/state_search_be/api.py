@@ -47,7 +47,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
             rev, query_embedding, limit=nresult, with_payload=True
         )
         results_ids = list(map(lambda p: p.payload["id"], results.points))
-        print(results.points)
+
         theorems = await self.db.theorem.find_many(
             where={
                 "id": {
@@ -55,6 +55,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
                 }
             }
         )
+        theorems = sorted(theorems, key=lambda x: results_ids.index(x.id))
 
         def to_code(theorem):
             args = "".join(theorem.args)

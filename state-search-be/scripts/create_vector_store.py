@@ -22,7 +22,7 @@ async def main():
     vb_client = QdrantClient("http://localhost:6333")
     db_client = Prisma()
     await db_client.connect()
-    theorems = (await db_client.theorem.find_many(where={"rev": args.rev}))
+    theorems = await db_client.theorem.find_many(where={"rev": args.rev})
     context_corpus = [
         "".join(map(lambda v: "<VAR>" + v, theorem.args)) for theorem in theorems
     ]
