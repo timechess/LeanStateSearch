@@ -7,11 +7,12 @@ from state_search_be.state_search.v1.state_search_pb2_grpc import (
 )
 from prisma import Prisma
 from qdrant_client import QdrantClient
-
+from dotenv import load_dotenv
 
 async def serve() -> None:
+    load_dotenv()
     db = Prisma()
-    vb = QdrantClient("http://localhost:6333")
+    vb = QdrantClient("http://qdrant:6333")
     await db.connect()
     server = grpc.aio.server()
     add_LeanStateSearchServiceServicer_to_server(

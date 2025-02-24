@@ -24,7 +24,7 @@ build-fe:
 	(cd ${FRONTEND} && docker build -t ${FRONTEND}:latest .)
 
 init-service:
-	(cd scripts && docker compose up --wait)
+	(docker compose up --wait)
 	(sleep 5 && ./scripts/init-pg.sh)
 
 proto:

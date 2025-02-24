@@ -1,4 +1,4 @@
-create database test;
-\c test
+create database statesearch;
+\c statesearch
 
 set timezone to 'UTC';

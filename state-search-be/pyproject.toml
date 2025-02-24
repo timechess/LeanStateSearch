@@ -24,8 +24,12 @@ qdrant-client = "^1.13.2"
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
 
+[[tool.poetry.source]]
+name = "mirrors"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "primary"
+
 [tool.ruff]
 line-length = 88
 target-version = "py311"
-
 exclude = ["tests/", "**/__pycache__/", ".venv/", "dist/", "state_search"]
