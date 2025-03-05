@@ -58,6 +58,7 @@ export default function SearchBox(props: { revs: string[] }) {
 
   const handleClear = () => {
     form.reset();
+    replace(`${pathname}`)
   };
 
   return (
