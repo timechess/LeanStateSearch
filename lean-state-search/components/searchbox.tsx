@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Card, CardTitle } from "./ui/card";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
@@ -14,28 +13,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
-const formSchema = z.object(
-  {
-    proofState: z.string()
-      .min(1, "Proof state is required")
-      .regex(/\⊢/, "Must contain ⊢"),
-    revision: z.string().min(1, "Please select a revision"),
-    resultNum: z.number().min(10).max(100).default(20)
-  }
-)
+const formSchema = z.object({
+  proofState: z
+    .string()
+    .min(1, "Proof state is required")
+    .regex(/\⊢/, "Must contain ⊢"),
+  revision: z.string().min(1, "Please select a revision"),
+  resultNum: z.number().min(10).max(100).default(20),
+});
 export default function SearchBox(props: { revs: string[] }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       proofState: "",
       revision: "",
-      resultNum: 20
-    }
+      resultNum: 20,
+    },
   });
 
   const pathname = usePathname();
@@ -62,15 +60,15 @@ export default function SearchBox(props: { revs: string[] }) {
     form.reset();
   };
 
-
   return (
-    <Card className="p-8 w-[1200px] max-w-6xl space-y-4 mx-auto border-black">
+    <Card className="p-8 w-full space-y-16 space-x-16 border-black">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex mx-4">
-            <CardTitle className="text-left mt-1">Query</CardTitle>
-            <span className="ml-4">
-              Your current proof state (You can copy it in VSCode)
+            <CardTitle className="text-left mt-1 text-2xl">Query</CardTitle>
+            <span className="ml-4 mt-2 text-xl">
+              Your current proof state (You can copy it in VSCode. Must contain
+              ⊢.)
             </span>
           </div>
 
@@ -78,14 +76,13 @@ export default function SearchBox(props: { revs: string[] }) {
             control={form.control}
             name="proofState"
             render={({ field }) => (
-
               <FormItem>
-                <FormMessage className="text-base ml-1 text-left" />
+                <FormMessage className="text-xl ml-1 text-left" />
                 <FormControl>
                   <Textarea
                     {...field}
                     placeholder="Enter your proof state"
-                    className="h-[200px] mt-4"
+                    className="h-[200px] mt-4 text-2xl"
                   />
                 </FormControl>
               </FormItem>
@@ -97,7 +94,7 @@ export default function SearchBox(props: { revs: string[] }) {
               type="button"
               variant="outline"
               onClick={handleClear}
-              className="w-1/4 border-black"
+              className="w-1/4 text-xl h-12 border-black"
             >
               Clear
             </Button>
@@ -130,8 +127,8 @@ export default function SearchBox(props: { revs: string[] }) {
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormMessage className="text-left ml-1" />
                     <FormControl>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a revision" />
+                      <SelectTrigger className="w-64 h-12">
+                        <SelectValue defaultValue={props.revs[0]} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -144,12 +141,11 @@ export default function SearchBox(props: { revs: string[] }) {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-
                 </FormItem>
               )}
             />
 
-            <Button type="submit" className="w-1/4">
+            <Button type="submit" className="w-1/4 text-xl h-12">
               Search
             </Button>
           </div>
@@ -157,6 +153,4 @@ export default function SearchBox(props: { revs: string[] }) {
       </Form>
     </Card>
   );
-
-
 }

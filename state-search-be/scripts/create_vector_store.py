@@ -32,9 +32,7 @@ async def main():
     corpus_embeddings = (context_embeddings + goal_embeddings) / 2
     points = [
         PointStruct(
-            id=i,
-            vector=corpus_embeddings[i].tolist(),
-            payload={"id": theorems[i].id}
+            id=i, vector=corpus_embeddings[i].tolist(), payload={"id": theorems[i].id}
         )
         for i in range(len(corpus_embeddings))
     ]

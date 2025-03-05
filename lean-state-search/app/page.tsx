@@ -1,3 +1,4 @@
+import { AboutPage } from "@/components/about";
 import { StateSearchResultTable } from "@/components/search-result";
 import SearchBox from "@/components/searchbox";
 import { getAllRev } from "@/lib/grpc";
@@ -18,7 +19,7 @@ export default async function StateSearchSearchPage(props: {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r">
       <main className="flex flex-col items-center justify-center px-4 text-center">
-        <h1 className="text-6xl font-extrabold text-gray-800 drop-shadow-lg">
+        <h1 className="text-6xl font-extrabold text-gray-800 drop-shadow-lg mt-8">
           Lean State Search
         </h1>
         <p className="mt-4 text-2xl text-gray-700 max-w-xl">
@@ -36,7 +37,9 @@ export default async function StateSearchSearchPage(props: {
                 rev={rev ?? "v4.10.0"}
               />
             </div>
-          ) : null}
+          ) : (
+            <AboutPage />
+          )}
         </div>
       </main>
     </div>

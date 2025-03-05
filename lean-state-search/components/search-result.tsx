@@ -61,6 +61,7 @@ async function MathlibTheoremCard({
         <Button variant="ghost" className="text-lg">
           <a
             href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem.name}#doc`}
+            target="_blank"
           >
             Go To Doc
           </a>

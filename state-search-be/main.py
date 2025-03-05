@@ -9,6 +9,7 @@ from prisma import Prisma
 from qdrant_client import QdrantClient
 from dotenv import load_dotenv
 
+
 async def serve() -> None:
     load_dotenv()
     db = Prisma()

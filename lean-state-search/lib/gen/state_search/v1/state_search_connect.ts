@@ -3,7 +3,14 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { FeedbackRequest, FeedbackResponse, GetAllRevRequest, GetAllRevResponse, SearchTheoremRequest, SearchTheoremResponse } from "./state_search_pb.ts";
+import {
+  FeedbackRequest,
+  FeedbackResponse,
+  GetAllRevRequest,
+  GetAllRevResponse,
+  SearchTheoremRequest,
+  SearchTheoremResponse,
+} from "./state_search_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -47,6 +54,5 @@ export const LeanStateSearchService = {
       O: FeedbackResponse,
       kind: MethodKind.Unary,
     },
-  }
+  },
 } as const;
-
