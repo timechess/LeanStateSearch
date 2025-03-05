@@ -31,7 +31,7 @@ export default function SearchBox(props: { revs: string[] }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       proofState: "",
-      revision: "",
+      revision: props.revs[0],
       resultNum: 20,
     },
   });
@@ -61,7 +61,7 @@ export default function SearchBox(props: { revs: string[] }) {
   };
 
   return (
-    <Card className="p-8 w-full space-y-16 space-x-16 border-black">
+    <Card className="p-8 w-full space-y-16 border-black">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex mx-4">
@@ -128,7 +128,7 @@ export default function SearchBox(props: { revs: string[] }) {
                     <FormMessage className="text-left ml-1" />
                     <FormControl>
                       <SelectTrigger className="w-64 h-12">
-                        <SelectValue defaultValue={props.revs[0]} />
+                        <SelectValue placeholder={props.revs[0]} defaultValue={props.revs[0]} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

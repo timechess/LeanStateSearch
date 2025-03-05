@@ -42,33 +42,33 @@ async function MathlibTheoremCard({
     });
   };
   return (
-    <Card className="p-6 space-y-6 max-w-6xl mx-auto shadow-lg hover:shadow-xl transition-shadow border border-gray-200 rounded-lg bg-white mb-4">
-      <div className="flex justify-between items-center border-b pb-4 mb-4">
-        <CardTitle className="text-xl font-semibold text-black text-left inline-block">
-          {theorem.name}
-        </CardTitle>
-        <span className="text-sm text-gray-500 inline-block">
-          {theorem.rev}
-        </span>
-      </div>
-      <CardContent className="text-black leading-relaxed text-md text-left">
-        <pre
-          className="rounded px-4 pt-4"
-          dangerouslySetInnerHTML={{ __html: highlightedCode }}
-        />
-      </CardContent>
-      <CardFooter className="flex justify-between mt-4 items-center">
-        <Button variant="ghost" className="text-lg">
-          <a
-            href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem.name}#doc`}
-            target="_blank"
-          >
-            Go To Doc
-          </a>
-        </Button>
-        <LikeDislikeToggle create={create} update={update} />
-      </CardFooter>
-    </Card>
+      <Card className="w-full p-6 space-y-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-200 rounded-lg bg-white mb-4">
+        <div className="flex justify-between items-center border-b pb-4 mb-4">
+          <CardTitle className="text-xl font-semibold text-black text-left inline-block">
+            {theorem.name}
+          </CardTitle>
+          <span className="text-sm text-gray-500 inline-block">
+            {theorem.rev}
+          </span>
+        </div>
+        <CardContent className="text-black leading-relaxed text-md text-left">
+          <pre
+            className="w-full rounded px-4 pt-4"
+            dangerouslySetInnerHTML={{ __html: highlightedCode }}
+          />
+        </CardContent>
+        <CardFooter className="flex justify-between mt-4 items-center">
+          <Button variant="ghost" className="text-lg">
+            <a
+              href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem.name}#doc`}
+              target="_blank"
+            >
+              Go To Doc
+            </a>
+          </Button>
+          <LikeDislikeToggle create={create} update={update} />
+        </CardFooter>
+      </Card>
   );
 }
 
@@ -85,7 +85,7 @@ export async function StateSearchResultTable({
 }) {
   const data = (await searchTheorem({ query, nresult, rerank, rev })).results;
   return (
-    <div className="w-full">
+    <div className="w-full mx-auto mt-4">
       {data.map((theorem) => (
         <MathlibTheoremCard key={theorem.id} theorem={theorem} query={query} />
       ))}
