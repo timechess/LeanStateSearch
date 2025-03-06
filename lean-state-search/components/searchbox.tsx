@@ -52,12 +52,13 @@ export default function SearchBox(props: { revs: string[] }) {
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // 替换原来的 handleSearch
     handleSearch(values.proofState, values.resultNum, values.revision);
   }
 
   const handleClear = () => {
+    const resultNum = form.getValues("resultNum");
     form.reset();
+    form.setValue("resultNum", resultNum);
     replace(`${pathname}`)
   };
 
@@ -84,6 +85,12 @@ export default function SearchBox(props: { revs: string[] }) {
                     {...field}
                     placeholder="Enter your proof state"
                     className="h-[200px] mt-4 text-2xl"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        form.handleSubmit(onSubmit)();
+                      }
+                    }}
                   />
                 </FormControl>
               </FormItem>
