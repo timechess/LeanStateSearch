@@ -31,7 +31,8 @@ export function AboutPage() {
           <p>
             Our search engine will parse the proof states from the Lean infoview
             into arguments and goals. The special token{" "}
-            <code className="bg-gray-100 px-1 rounded">⊢</code> is required. Here is a valid query example:
+            <code className="bg-gray-100 px-1 rounded">⊢</code> is required.
+            Here is a valid query example:
           </p>
 
           <div className="bg-gray-100 p-4 rounded-lg">
