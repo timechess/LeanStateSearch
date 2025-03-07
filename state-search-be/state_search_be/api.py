@@ -40,7 +40,11 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
             goal = ""
 
         context = re.sub(r"\n\s+", "", context).strip()
-        context = "".join(filter(lambda line: ":" in line, ["<VAR>" + var for var in context.split("\n")]))
+        context = "".join(
+            filter(
+                lambda line: ":" in line, ["<VAR>" + var for var in context.split("\n")]
+            )
+        )
         goal = "<GOAL>" + goal.strip()
         query = context + goal
         query_embedding = self.model.encode_queries(query).tolist()
@@ -70,6 +74,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
                     code=to_code(theorem),
                     rev=rev,
                     module=theorem.module,
+                    formal_type=theorem.formal_type,
                 )
                 for theorem in theorems
             ]

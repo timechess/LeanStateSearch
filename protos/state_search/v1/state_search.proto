@@ -9,6 +9,7 @@ message Theorem {
   string code = 3;
   string rev = 4;
   string module = 5;
+  string formal_type = 6;
 }
 
 // Service for searching.
@@ -30,8 +31,7 @@ message GetAllRevResponse {
 message SearchTheoremRequest {
   string query = 1;
   int32 nresult = 2;
-  bool rerank = 3;
-  string rev = 4;
+  string rev = 3;
 }
 
 message SearchTheoremResponse {

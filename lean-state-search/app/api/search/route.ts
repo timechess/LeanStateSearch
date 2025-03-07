@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
           },
         },
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
           description: "The 'query' parameter must be a valid Lean proof state",
         },
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -51,10 +51,11 @@ export async function GET(request: NextRequest) {
       {
         error: "Invalid parameter value",
         schema: {
-          description: "Lean State Search does not support the specified revision",
+          description:
+            "Lean State Search does not support the specified revision",
         },
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -67,21 +68,28 @@ export async function GET(request: NextRequest) {
           description: "The 'results' parameter must be a valid number",
         },
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
-
-
-
 
   const searchResults = (
     await searchTheorem({
       query: query,
       nresult: resultNum,
-      rerank: false,
       rev: rev,
     })
   ).results;
 
-  return NextResponse.json(searchResults);
+  const apiResults = searchResults.map((result) => {
+    {
+      return {
+        name: result.name,
+        formal_type: result.formalType,
+        module: result.module,
+        rev: result.rev,
+      };
+    }
+  });
+
+  return NextResponse.json(apiResults);
 }

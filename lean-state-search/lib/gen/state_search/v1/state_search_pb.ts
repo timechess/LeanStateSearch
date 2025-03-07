@@ -44,6 +44,11 @@ export class Theorem extends Message<Theorem> {
    */
   module = "";
 
+  /**
+   * @generated from field: string formal_type = 6;
+   */
+  formalType = "";
+
   constructor(data?: PartialMessage<Theorem>) {
     super();
     proto3.util.initPartial(data, this);
@@ -57,6 +62,12 @@ export class Theorem extends Message<Theorem> {
     { no: 3, name: "code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "rev", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "module", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    {
+      no: 6,
+      name: "formal_type",
+      kind: "scalar",
+      T: 9 /* ScalarType.STRING */,
+    },
   ]);
 
   static fromBinary(
@@ -200,12 +211,7 @@ export class SearchTheoremRequest extends Message<SearchTheoremRequest> {
   nresult = 0;
 
   /**
-   * @generated from field: bool rerank = 3;
-   */
-  rerank = false;
-
-  /**
-   * @generated from field: string rev = 4;
+   * @generated from field: string rev = 3;
    */
   rev = "";
 
@@ -219,8 +225,7 @@ export class SearchTheoremRequest extends Message<SearchTheoremRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "nresult", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 3, name: "rerank", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 4, name: "rev", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "rev", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(

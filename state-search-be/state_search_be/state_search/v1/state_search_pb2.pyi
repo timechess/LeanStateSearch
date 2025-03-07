@@ -6,18 +6,20 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Theorem(_message.Message):
-    __slots__ = ("id", "name", "code", "rev", "module")
+    __slots__ = ("id", "name", "code", "rev", "module", "formal_type")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     CODE_FIELD_NUMBER: _ClassVar[int]
     REV_FIELD_NUMBER: _ClassVar[int]
     MODULE_FIELD_NUMBER: _ClassVar[int]
+    FORMAL_TYPE_FIELD_NUMBER: _ClassVar[int]
     id: str
     name: str
     code: str
     rev: str
     module: str
-    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., code: _Optional[str] = ..., rev: _Optional[str] = ..., module: _Optional[str] = ...) -> None: ...
+    formal_type: str
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., code: _Optional[str] = ..., rev: _Optional[str] = ..., module: _Optional[str] = ..., formal_type: _Optional[str] = ...) -> None: ...
 
 class GetAllRevRequest(_message.Message):
     __slots__ = ()
@@ -30,16 +32,14 @@ class GetAllRevResponse(_message.Message):
     def __init__(self, revs: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class SearchTheoremRequest(_message.Message):
-    __slots__ = ("query", "nresult", "rerank", "rev")
+    __slots__ = ("query", "nresult", "rev")
     QUERY_FIELD_NUMBER: _ClassVar[int]
     NRESULT_FIELD_NUMBER: _ClassVar[int]
-    RERANK_FIELD_NUMBER: _ClassVar[int]
     REV_FIELD_NUMBER: _ClassVar[int]
     query: str
     nresult: int
-    rerank: bool
     rev: str
-    def __init__(self, query: _Optional[str] = ..., nresult: _Optional[int] = ..., rerank: bool = ..., rev: _Optional[str] = ...) -> None: ...
+    def __init__(self, query: _Optional[str] = ..., nresult: _Optional[int] = ..., rev: _Optional[str] = ...) -> None: ...
 
 class SearchTheoremResponse(_message.Message):
     __slots__ = ("results",)
