@@ -38,8 +38,9 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
             goal = query[1]
         else:
             goal = ""
+
         context = re.sub(r"\n\s+", "", context).strip()
-        context = "".join(["<VAR>" + var for var in context.split("\n")])
+        context = "".join(filter(lambda line: ":" in line, ["<VAR>" + var for var in context.split("\n")]))
         goal = "<GOAL>" + goal.strip()
         query = context + goal
         query_embedding = self.model.encode_queries(query).tolist()

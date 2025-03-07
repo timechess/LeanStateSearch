@@ -9,12 +9,13 @@ generator client {
 }
 
 model Theorem {
-  id     String   @id @default(uuid())
-  name   String
-  args   String[]
-  goal   String
-  rev    String
-  module String
+  id          String   @id @default(uuid())
+  name        String
+  args        String[]
+  goal        String
+  rev         String
+  module      String
+  formal_type String   @default("")
 }
 
 model FeedBack {
