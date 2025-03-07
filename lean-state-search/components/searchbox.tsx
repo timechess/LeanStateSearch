@@ -59,7 +59,7 @@ export default function SearchBox(props: { revs: string[] }) {
     const resultNum = form.getValues("resultNum");
     form.reset();
     form.setValue("resultNum", resultNum);
-    replace(`${pathname}`)
+    replace(`${pathname}`);
   };
 
   return (
@@ -136,7 +136,10 @@ export default function SearchBox(props: { revs: string[] }) {
                     <FormMessage className="text-left ml-1" />
                     <FormControl>
                       <SelectTrigger className="w-64 h-12">
-                        <SelectValue placeholder={props.revs[0]} defaultValue={props.revs[0]} />
+                        <SelectValue
+                          placeholder={props.revs[0]}
+                          defaultValue={props.revs[0]}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

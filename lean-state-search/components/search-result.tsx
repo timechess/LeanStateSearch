@@ -66,7 +66,11 @@ async function MathlibTheoremCard({
             Go To Doc
           </a>
         </Button>
-        <LikeDislikeToggle create={create} update={update} theorem={theorem.name} />
+        <LikeDislikeToggle
+          create={create}
+          update={update}
+          theorem={theorem.name}
+        />
       </CardFooter>
     </Card>
   );

@@ -49,7 +49,7 @@ const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
     setTimeout(() => {
       setIsCopied(false);
     }, 1000);
-  }
+  };
 
   return (
     <div className="flex space-x-4">
@@ -67,20 +67,22 @@ const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
       <Toggle
         pressed={liked}
         onPressedChange={handleLike}
-        className={`flex items-center px-4 py-2 ${liked
-          ? "bg-green-500 text-white border-2 border-black"
-          : "bg-gray-200 text-gray-700"
-          }`}
+        className={`flex items-center px-4 py-2 ${
+          liked
+            ? "bg-green-500 text-white border-2 border-black"
+            : "bg-gray-200 text-gray-700"
+        }`}
       >
         <ThumbsUp className="w-5 h-5" />
       </Toggle>
       <Toggle
         pressed={disliked}
         onPressedChange={handleDislike}
-        className={`flex items-center px-4 py-2 ${disliked
-          ? "bg-red-500 text-white border-2 border-black"
-          : "bg-gray-200 text-gray-700"
-          }`}
+        className={`flex items-center px-4 py-2 ${
+          disliked
+            ? "bg-red-500 text-white border-2 border-black"
+            : "bg-gray-200 text-gray-700"
+        }`}
       >
         <ThumbsDown className="w-5 h-5" />
       </Toggle>

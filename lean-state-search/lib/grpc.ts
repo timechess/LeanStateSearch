@@ -20,7 +20,7 @@ import type {
 } from "./gen/state_search/v1/state_search_pb";
 
 const grpcOptions: GrpcTransportOptions = {
-  baseUrl: "http://backend:7720",
+  baseUrl: "http://localhost:7720",
   httpVersion: "2",
 };
 
