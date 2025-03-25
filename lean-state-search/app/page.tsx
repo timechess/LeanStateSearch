@@ -1,7 +1,7 @@
 import { AboutPage } from "@/components/about";
 import { StateSearchResultTable } from "@/components/search-result";
 import SearchBox from "@/components/searchbox";
-import { getAllRev } from "@/lib/grpc";
+import { call, getAllRev } from "@/lib/grpc";
 
 export default async function StateSearchSearchPage(props: {
   searchParams?: Promise<{
@@ -16,6 +16,9 @@ export default async function StateSearchSearchPage(props: {
   const results = Number.parseInt(searchParams?.results ?? "20");
   const rev = searchParams?.rev;
   const all_revs = (await getAllRev({})).revs;
+  if (query) {
+    await call({ callType: 0 });
+  }
   return (
     <div className="min-h-screen flex-col items-center justify-center bg-gradient-to-r">
       <main className="items-center justify-center px-4 text-center">
@@ -33,7 +36,6 @@ export default async function StateSearchSearchPage(props: {
             <StateSearchResultTable
               query={query}
               nresult={results}
-              rerank={true}
               rev={rev ?? "v4.10.0"}
             />
           ) : (

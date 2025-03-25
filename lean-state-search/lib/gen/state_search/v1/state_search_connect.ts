@@ -4,6 +4,10 @@
 // @ts-nocheck
 
 import {
+  CallRequest,
+  CallResponse,
+  ClickRequest,
+  ClickResponse,
   FeedbackRequest,
   FeedbackResponse,
   GetAllRevRequest,
@@ -52,6 +56,26 @@ export const LeanStateSearchService = {
       name: "Feedback",
       I: FeedbackRequest,
       O: FeedbackResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Collect click events from user.
+     *
+     * @generated from rpc state_search.v1.LeanStateSearchService.Click
+     */
+    click: {
+      name: "Click",
+      I: ClickRequest,
+      O: ClickResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc state_search.v1.LeanStateSearchService.Call
+     */
+    call: {
+      name: "Call",
+      I: CallRequest,
+      O: CallResponse,
       kind: MethodKind.Unary,
     },
   },

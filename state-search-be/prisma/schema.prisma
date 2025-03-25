@@ -23,6 +23,23 @@ model FeedBack {
   query      String
   theorem_id String
   relevant   Boolean
+  rank       Int
   createAt   DateTime @default(now())
   updateAt   DateTime @updatedAt
+}
+
+model Click {
+  id         Int      @id @default(autoincrement())
+  query      String
+  theorem_id String
+  rank       Int
+  createAt   DateTime @default(now())
+  updateAt   DateTime @updatedAt
+}
+
+model Call {
+  id       Int      @id @default(autoincrement())
+  type     Int
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 }

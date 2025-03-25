@@ -4,17 +4,24 @@ import React, { useState } from "react";
 import { Toggle } from "./ui/toggle";
 import { ThumbsDown, ThumbsUp, Copy, Check } from "lucide-react";
 import { Button } from "./ui/button";
+import { click } from "@/lib/grpc";
 
 type LikeDislikeToggleProps = {
   create?: (like: boolean) => void;
   update?: (like: boolean) => void;
   theorem?: string;
+  query: string;
+  theorem_id: string;
+  id: number;
 };
 
 const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
   create,
   update,
   theorem,
+  query,
+  theorem_id,
+  id,
 }) => {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -43,7 +50,12 @@ const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
     }
   };
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
+    await click({
+      query,
+      theoremId: theorem_id,
+      rank: id,
+    });
     navigator.clipboard.writeText(theorem ? theorem : "");
     setIsCopied(true);
     setTimeout(() => {

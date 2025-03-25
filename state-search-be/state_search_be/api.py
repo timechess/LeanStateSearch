@@ -8,6 +8,10 @@ from state_search_be.state_search.v1.state_search_pb2 import (
     FeedbackRequest,
     FeedbackResponse,
     GetAllRevResponse,
+    ClickRequest,
+    ClickResponse,
+    CallRequest,
+    CallResponse,
     Theorem,
 )
 from dotenv import load_dotenv
@@ -85,6 +89,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
         theorem_id = request.theorem_id
         relevant = bool(request.relevant)
         update = bool(request.update)
+        rank = request.rank
 
         if update:
             old = await self.db.feedback.find_first(
@@ -95,6 +100,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
                     "query": query,
                     "theorem_id": theorem_id,
                     "relevant": relevant,
+                    "rank": rank,
                 },
                 where={"id": old.id},
             )
@@ -104,6 +110,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
                     "query": query,
                     "theorem_id": theorem_id,
                     "relevant": relevant,
+                    "rank": rank,
                 }
             )
         return FeedbackResponse()
@@ -112,3 +119,18 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
         results = await self.db.query_raw('SELECT DISTINCT "rev" FROM "Theorem";')
         values = [result["rev"] for result in results]
         return GetAllRevResponse(revs=values)
+
+    async def Click(self, request: ClickRequest, context):
+        query = request.query
+        theorem_id = request.theorem_id
+        rank = request.rank
+
+        await self.db.click.create(
+            data={"query": query, "theorem_id": theorem_id, "rank": rank}
+        )
+        return ClickResponse()
+
+    async def Call(self, request: CallRequest, context):
+        call_type = request.call_type
+        await self.db.call.create(data={"type": call_type})
+        return CallResponse()

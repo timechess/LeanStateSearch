@@ -20,6 +20,9 @@ service LeanStateSearchService {
   rpc SearchTheorem(SearchTheoremRequest) returns (SearchTheoremResponse);
   // Collect feedbacks from user.
   rpc Feedback(FeedbackRequest) returns (FeedbackResponse);
+  // Collect click events from user.
+  rpc Click(ClickRequest) returns (ClickResponse);
+  rpc Call(CallRequest) returns (CallResponse);
 }
 
 message GetAllRevRequest {}
@@ -43,6 +46,21 @@ message FeedbackRequest {
   string theorem_id = 2;
   bool relevant = 3;
   bool update = 4;
+  int32 rank = 5;
 }
 
 message FeedbackResponse {}
+
+message ClickRequest {
+  string query = 1;
+  string theorem_id = 2;
+  int32 rank = 3;
+}
+
+message ClickResponse {}
+
+message CallRequest {
+  int32 call_type = 1;
+}
+
+message CallResponse {}

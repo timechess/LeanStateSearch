@@ -1,4 +1,4 @@
-import { getAllRev, searchTheorem } from "@/lib/grpc";
+import { call, getAllRev, searchTheorem } from "@/lib/grpc";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
       rev: rev,
     })
   ).results;
-
+  await call({ callType: 1 });
   const apiResults = searchResults.map((result) => {
     {
       return {

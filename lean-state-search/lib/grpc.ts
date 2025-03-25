@@ -17,7 +17,12 @@ import type {
   SearchTheoremResponse,
   FeedbackRequest,
   FeedbackResponse,
+  ClickRequest,
+  ClickResponse,
+  CallRequest,
+  CallResponse,
 } from "./gen/state_search/v1/state_search_pb";
+import { request } from "http";
 
 const grpcOptions: GrpcTransportOptions = {
   baseUrl: "http://localhost:7720",
@@ -43,3 +48,13 @@ export const feedback: (
   request: PlainMessage<FeedbackRequest>,
 ) => Promise<PlainMessage<FeedbackResponse>> = async (request) =>
   toPlainMessage(await leanStateSearchServicer.feedback(request));
+
+export const click: (
+  request: PlainMessage<ClickRequest>,
+) => Promise<PlainMessage<ClickResponse>> = async (request) =>
+  toPlainMessage(await leanStateSearchServicer.click(request));
+
+export const call: (
+  request: PlainMessage<CallRequest>,
+) => Promise<PlainMessage<CallResponse>> = async (request) =>
+  toPlainMessage(await leanStateSearchServicer.call(request));

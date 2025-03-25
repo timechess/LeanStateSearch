@@ -1,13 +1,7 @@
-import { searchTheorem, feedback } from "@/lib/grpc";
+import { searchTheorem, feedback, click } from "@/lib/grpc";
 import { PlainMessage } from "@bufbuild/protobuf";
 import { Theorem } from "@/lib/gen/state_search/v1/state_search_pb";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
 import { codeToHtml } from "shiki";
 import { Button } from "./ui/button";
 import LikeDislikeToggle from "./button";
@@ -15,9 +9,11 @@ import LikeDislikeToggle from "./button";
 async function MathlibTheoremCard({
   theorem,
   query,
+  id,
 }: {
   theorem: PlainMessage<Theorem>;
   query: string;
+  id: number;
 }) {
   const highlightedCode = await codeToHtml(theorem.code, {
     lang: "lean4",
@@ -30,6 +26,7 @@ async function MathlibTheoremCard({
       theoremId: theorem.id,
       relevant: liked,
       update: false,
+      rank: id,
     });
   };
   const update = async (liked: boolean) => {
@@ -39,8 +36,10 @@ async function MathlibTheoremCard({
       theoremId: theorem.id,
       relevant: liked,
       update: true,
+      rank: id,
     });
   };
+
   return (
     <Card className="w-full p-6 space-y-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-200 rounded-lg bg-white mb-4">
       <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -58,7 +57,13 @@ async function MathlibTheoremCard({
         />
       </CardContent>
       <CardFooter className="flex justify-between mt-4 items-center">
-        <Button variant="ghost" className="text-lg">
+        <Button
+          variant="ghost"
+          className="text-lg"
+          onClick={async () => {
+            await click({ query, theoremId: theorem.id, rank: id });
+          }}
+        >
           <a
             href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem.name}#doc`}
             target="_blank"
@@ -70,6 +75,9 @@ async function MathlibTheoremCard({
           create={create}
           update={update}
           theorem={theorem.name}
+          query={query}
+          theorem_id={theorem.id}
+          id={id}
         />
       </CardFooter>
     </Card>
@@ -79,19 +87,22 @@ async function MathlibTheoremCard({
 export async function StateSearchResultTable({
   query,
   nresult,
-  rerank,
   rev,
 }: {
   query: string;
   nresult: number;
-  rerank: boolean;
   rev: string;
 }) {
-  const data = (await searchTheorem({ query, nresult, rerank, rev })).results;
+  const data = (await searchTheorem({ query, nresult, rev })).results;
   return (
     <div className="w-full mx-auto mt-4">
-      {data.map((theorem) => (
-        <MathlibTheoremCard key={theorem.id} theorem={theorem} query={query} />
+      {data.map((theorem, id) => (
+        <MathlibTheoremCard
+          key={theorem.id}
+          theorem={theorem}
+          query={query}
+          id={id}
+        />
       ))}
     </div>
   );

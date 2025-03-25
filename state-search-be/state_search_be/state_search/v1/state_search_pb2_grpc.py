@@ -30,6 +30,16 @@ class LeanStateSearchServiceStub(object):
                 request_serializer=state__search_dot_v1_dot_state__search__pb2.FeedbackRequest.SerializeToString,
                 response_deserializer=state__search_dot_v1_dot_state__search__pb2.FeedbackResponse.FromString,
                 _registered_method=True)
+        self.Click = channel.unary_unary(
+                '/state_search.v1.LeanStateSearchService/Click',
+                request_serializer=state__search_dot_v1_dot_state__search__pb2.ClickRequest.SerializeToString,
+                response_deserializer=state__search_dot_v1_dot_state__search__pb2.ClickResponse.FromString,
+                _registered_method=True)
+        self.Call = channel.unary_unary(
+                '/state_search.v1.LeanStateSearchService/Call',
+                request_serializer=state__search_dot_v1_dot_state__search__pb2.CallRequest.SerializeToString,
+                response_deserializer=state__search_dot_v1_dot_state__search__pb2.CallResponse.FromString,
+                _registered_method=True)
 
 
 class LeanStateSearchServiceServicer(object):
@@ -57,6 +67,19 @@ class LeanStateSearchServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Click(self, request, context):
+        """Collect click events from user.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Call(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_LeanStateSearchServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -74,6 +97,16 @@ def add_LeanStateSearchServiceServicer_to_server(servicer, server):
                     servicer.Feedback,
                     request_deserializer=state__search_dot_v1_dot_state__search__pb2.FeedbackRequest.FromString,
                     response_serializer=state__search_dot_v1_dot_state__search__pb2.FeedbackResponse.SerializeToString,
+            ),
+            'Click': grpc.unary_unary_rpc_method_handler(
+                    servicer.Click,
+                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.ClickRequest.FromString,
+                    response_serializer=state__search_dot_v1_dot_state__search__pb2.ClickResponse.SerializeToString,
+            ),
+            'Call': grpc.unary_unary_rpc_method_handler(
+                    servicer.Call,
+                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.CallRequest.FromString,
+                    response_serializer=state__search_dot_v1_dot_state__search__pb2.CallResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -158,6 +191,60 @@ class LeanStateSearchService(object):
             '/state_search.v1.LeanStateSearchService/Feedback',
             state__search_dot_v1_dot_state__search__pb2.FeedbackRequest.SerializeToString,
             state__search_dot_v1_dot_state__search__pb2.FeedbackResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Click(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/state_search.v1.LeanStateSearchService/Click',
+            state__search_dot_v1_dot_state__search__pb2.ClickRequest.SerializeToString,
+            state__search_dot_v1_dot_state__search__pb2.ClickResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Call(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/state_search.v1.LeanStateSearchService/Call',
+            state__search_dot_v1_dot_state__search__pb2.CallRequest.SerializeToString,
+            state__search_dot_v1_dot_state__search__pb2.CallResponse.FromString,
             options,
             channel_credentials,
             insecure,

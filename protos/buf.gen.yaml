@@ -4,7 +4,7 @@ managed:
 plugins:
   - remote: buf.build/grpc/python:v1.69.0
     out: ../state-search-be/state_search_be
-  - remote: buf.build/protocolbuffers/python
+  - remote: buf.build/protocolbuffers/python:v29.3
     out: ../state-search-be/state_search_be
   - remote: buf.build/protocolbuffers/pyi:v29.2
     out: ../state-search-be/state_search_be

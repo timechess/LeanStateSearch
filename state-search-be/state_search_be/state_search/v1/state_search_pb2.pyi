@@ -48,17 +48,43 @@ class SearchTheoremResponse(_message.Message):
     def __init__(self, results: _Optional[_Iterable[_Union[Theorem, _Mapping]]] = ...) -> None: ...
 
 class FeedbackRequest(_message.Message):
-    __slots__ = ("query", "theorem_id", "relevant", "update")
+    __slots__ = ("query", "theorem_id", "relevant", "update", "rank")
     QUERY_FIELD_NUMBER: _ClassVar[int]
     THEOREM_ID_FIELD_NUMBER: _ClassVar[int]
     RELEVANT_FIELD_NUMBER: _ClassVar[int]
     UPDATE_FIELD_NUMBER: _ClassVar[int]
+    RANK_FIELD_NUMBER: _ClassVar[int]
     query: str
     theorem_id: str
     relevant: bool
     update: bool
-    def __init__(self, query: _Optional[str] = ..., theorem_id: _Optional[str] = ..., relevant: bool = ..., update: bool = ...) -> None: ...
+    rank: int
+    def __init__(self, query: _Optional[str] = ..., theorem_id: _Optional[str] = ..., relevant: bool = ..., update: bool = ..., rank: _Optional[int] = ...) -> None: ...
 
 class FeedbackResponse(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class ClickRequest(_message.Message):
+    __slots__ = ("query", "theorem_id", "rank")
+    QUERY_FIELD_NUMBER: _ClassVar[int]
+    THEOREM_ID_FIELD_NUMBER: _ClassVar[int]
+    RANK_FIELD_NUMBER: _ClassVar[int]
+    query: str
+    theorem_id: str
+    rank: int
+    def __init__(self, query: _Optional[str] = ..., theorem_id: _Optional[str] = ..., rank: _Optional[int] = ...) -> None: ...
+
+class ClickResponse(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class CallRequest(_message.Message):
+    __slots__ = ("call_type",)
+    CALL_TYPE_FIELD_NUMBER: _ClassVar[int]
+    call_type: int
+    def __init__(self, call_type: _Optional[int] = ...) -> None: ...
+
+class CallResponse(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...

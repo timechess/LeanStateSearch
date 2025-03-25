@@ -330,6 +330,11 @@ export class FeedbackRequest extends Message<FeedbackRequest> {
    */
   update = false;
 
+  /**
+   * @generated from field: int32 rank = 5;
+   */
+  rank = 0;
+
   constructor(data?: PartialMessage<FeedbackRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -342,6 +347,7 @@ export class FeedbackRequest extends Message<FeedbackRequest> {
     { no: 2, name: "theorem_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "relevant", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 4, name: "update", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 5, name: "rank", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(
@@ -412,5 +418,199 @@ export class FeedbackResponse extends Message<FeedbackResponse> {
     b: FeedbackResponse | PlainMessage<FeedbackResponse> | undefined,
   ): boolean {
     return proto3.util.equals(FeedbackResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.ClickRequest
+ */
+export class ClickRequest extends Message<ClickRequest> {
+  /**
+   * @generated from field: string query = 1;
+   */
+  query = "";
+
+  /**
+   * @generated from field: string theorem_id = 2;
+   */
+  theoremId = "";
+
+  /**
+   * @generated from field: int32 rank = 3;
+   */
+  rank = 0;
+
+  constructor(data?: PartialMessage<ClickRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.ClickRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "theorem_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "rank", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): ClickRequest {
+    return new ClickRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): ClickRequest {
+    return new ClickRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): ClickRequest {
+    return new ClickRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a: ClickRequest | PlainMessage<ClickRequest> | undefined,
+    b: ClickRequest | PlainMessage<ClickRequest> | undefined,
+  ): boolean {
+    return proto3.util.equals(ClickRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.ClickResponse
+ */
+export class ClickResponse extends Message<ClickResponse> {
+  constructor(data?: PartialMessage<ClickResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.ClickResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => []);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): ClickResponse {
+    return new ClickResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): ClickResponse {
+    return new ClickResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): ClickResponse {
+    return new ClickResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a: ClickResponse | PlainMessage<ClickResponse> | undefined,
+    b: ClickResponse | PlainMessage<ClickResponse> | undefined,
+  ): boolean {
+    return proto3.util.equals(ClickResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.CallRequest
+ */
+export class CallRequest extends Message<CallRequest> {
+  /**
+   * @generated from field: int32 call_type = 1;
+   */
+  callType = 0;
+
+  constructor(data?: PartialMessage<CallRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.CallRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "call_type", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): CallRequest {
+    return new CallRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): CallRequest {
+    return new CallRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): CallRequest {
+    return new CallRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a: CallRequest | PlainMessage<CallRequest> | undefined,
+    b: CallRequest | PlainMessage<CallRequest> | undefined,
+  ): boolean {
+    return proto3.util.equals(CallRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.CallResponse
+ */
+export class CallResponse extends Message<CallResponse> {
+  constructor(data?: PartialMessage<CallResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.CallResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => []);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): CallResponse {
+    return new CallResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): CallResponse {
+    return new CallResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): CallResponse {
+    return new CallResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a: CallResponse | PlainMessage<CallResponse> | undefined,
+    b: CallResponse | PlainMessage<CallResponse> | undefined,
+  ): boolean {
+    return proto3.util.equals(CallResponse, a, b);
   }
 }
