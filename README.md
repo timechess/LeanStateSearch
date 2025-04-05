@@ -69,13 +69,13 @@ The `MODEL_NAME_OR_PATH` environment variable should be the absolute path to the
 We recommend using docker for deployment. Run the following command to build the images of frontend and backend:
 
 ```shell
-sudo make build-images
+make build-images
 ```
 
 Then run the command to start the service:
 
 ```shell
-sudo make init-service
+make init-service
 ```
 
 After starting the basic services, you need to prepare the data yourself. We provide premises extracted from `v4.16.0` of Mathlib as an example. You can use existing tools like [ntp-toolkit](https://github.com/cmu-l3/ntp-toolkit) to extract data. Run the following command to upload data to the postgresql database.

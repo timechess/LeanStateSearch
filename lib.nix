@@ -7,6 +7,7 @@
         libiconv
         openssl
         poetry
+        ruff
         bashInteractive
         alejandra
         which
