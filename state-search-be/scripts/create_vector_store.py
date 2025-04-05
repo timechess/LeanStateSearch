@@ -19,7 +19,7 @@ async def main():
         use_fp16=False,
         pooling_method="mean",
     )
-    vb_client = QdrantClient("http://localhost:6333")
+    vb_client = QdrantClient(f"http://localhost:{os.getenv('QDRANT_PORT')}")
     db_client = Prisma()
     await db_client.connect()
     theorems = await db_client.theorem.find_many(where={"rev": args.rev})
@@ -27,8 +27,8 @@ async def main():
         "".join(map(lambda v: "<VAR>" + v, theorem.args)) for theorem in theorems
     ]
     goal_corpus = ["<GOAL>" + theorem.goal for theorem in theorems]
-    context_embeddings = model.encode_corpus(context_corpus)
-    goal_embeddings = model.encode_corpus(goal_corpus)
+    context_embeddings = model.encode_corpus(context_corpus, batch_size=32)
+    goal_embeddings = model.encode_corpus(goal_corpus, batch_size=32)
     corpus_embeddings = (context_embeddings + goal_embeddings) / 2
     points = [
         PointStruct(

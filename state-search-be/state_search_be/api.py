@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 import re
 from flag_model import FlagModel
 from prisma import Prisma
+from prisma.errors import RawQueryError
 from qdrant_client import QdrantClient
 
 load_dotenv()
@@ -116,8 +117,12 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
         return FeedbackResponse()
 
     async def GetAllRev(self, request, context):
-        results = await self.db.query_raw('SELECT DISTINCT "rev" FROM "Theorem";')
-        values = [result["rev"] for result in results]
+        try:
+            results = await self.db.query_raw('SELECT DISTINCT "rev" FROM "Theorem";')
+            values = [result["rev"] for result in results]
+        except RawQueryError:
+            values = []
+
         return GetAllRevResponse(revs=values)
 
     async def Click(self, request: ClickRequest, context):

@@ -1,10 +1,9 @@
-import { searchTheorem, feedback, click } from "@/lib/grpc";
+import { searchTheorem, feedback } from "@/lib/grpc";
 import { PlainMessage } from "@bufbuild/protobuf";
 import { Theorem } from "@/lib/gen/state_search/v1/state_search_pb";
 import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
 import { codeToHtml } from "shiki";
-import { Button } from "./ui/button";
-import LikeDislikeToggle from "./button";
+import { GoToDocButton, LikeDislikeToggle } from "./button";
 
 async function MathlibTheoremCard({
   theorem,
@@ -57,20 +56,12 @@ async function MathlibTheoremCard({
         />
       </CardContent>
       <CardFooter className="flex justify-between mt-4 items-center">
-        <Button
-          variant="ghost"
-          className="text-lg"
-          onClick={async () => {
-            await click({ query, theoremId: theorem.id, rank: id });
-          }}
-        >
-          <a
-            href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem.name}#doc`}
-            target="_blank"
-          >
-            Go To Doc
-          </a>
-        </Button>
+        <GoToDocButton
+          query={query}
+          theorem_id={theorem.id}
+          rank={id}
+          theorem_name={theorem.name}
+        />
         <LikeDislikeToggle
           create={create}
           update={update}

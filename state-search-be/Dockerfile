@@ -13,10 +13,18 @@ RUN mkdir -p /code
 
 WORKDIR /code
 
+COPY pyproject.toml /code
+COPY poetry.lock /code
+
+RUN poetry install  --no-interaction --no-ansi --no-root
+
 COPY . /code
 
-RUN poetry install  --no-interaction --no-ansi
+RUN poetry install --no-interaction --no-ansi
 
 RUN poetry run prisma generate
+
+ENV MODE="docker"
+ENV BACKEND_PORT="7720"
 
 CMD ["poetry", "run", "python", "main.py"]

@@ -22,10 +22,12 @@ import type {
   CallRequest,
   CallResponse,
 } from "./gen/state_search/v1/state_search_pb";
-import { request } from "http";
 
 const grpcOptions: GrpcTransportOptions = {
-  baseUrl: "http://localhost:7720",
+  baseUrl:
+    process.env.MODE === "docker"
+      ? "http://backend:7720"
+      : `http://localhost:${process.env.BACKEND_PORT ?? "7720"}`,
   httpVersion: "2",
 };
 

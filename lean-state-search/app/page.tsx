@@ -36,7 +36,7 @@ export default async function StateSearchSearchPage(props: {
             <StateSearchResultTable
               query={query}
               nresult={results}
-              rev={rev ?? "v4.10.0"}
+              rev={rev ?? "v4.16.0"}
             />
           ) : (
             <AboutPage />

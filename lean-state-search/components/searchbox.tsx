@@ -136,10 +136,14 @@ export default function SearchBox(props: { revs: string[] }) {
                     <FormMessage className="text-left ml-1" />
                     <FormControl>
                       <SelectTrigger className="w-64 h-12">
-                        <SelectValue
-                          placeholder={props.revs[0]}
-                          defaultValue={props.revs[0]}
-                        />
+                        {props.revs.length > 0 ? (
+                          <SelectValue
+                            placeholder={props.revs[0]}
+                            defaultValue={props.revs[0]}
+                          />
+                        ) : (
+                          <SelectValue />
+                        )}
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

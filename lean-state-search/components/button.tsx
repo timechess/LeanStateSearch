@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Toggle } from "./ui/toggle";
 import { ThumbsDown, ThumbsUp, Copy, Check } from "lucide-react";
 import { Button } from "./ui/button";
-import { click } from "@/lib/grpc";
+import { copyTheorem, goToDoc } from "@/lib/actions";
 
 type LikeDislikeToggleProps = {
   create?: (like: boolean) => void;
@@ -15,7 +15,7 @@ type LikeDislikeToggleProps = {
   id: number;
 };
 
-const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
+export const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
   create,
   update,
   theorem,
@@ -50,12 +50,8 @@ const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
     }
   };
 
-  const handleCopy = async () => {
-    await click({
-      query,
-      theoremId: theorem_id,
-      rank: id,
-    });
+  const handleCopy = () => {
+    copyTheorem(query, theorem_id, id);
     navigator.clipboard.writeText(theorem ? theorem : "");
     setIsCopied(true);
     setTimeout(() => {
@@ -102,4 +98,26 @@ const LikeDislikeToggle: React.FC<LikeDislikeToggleProps> = ({
   );
 };
 
-export default LikeDislikeToggle;
+export const GoToDocButton: React.FC<{
+  query: string;
+  theorem_id: string;
+  rank: number;
+  theorem_name: string;
+}> = ({ query, theorem_id, rank, theorem_name }) => {
+  return (
+    <Button
+      variant="ghost"
+      className="text-lg"
+      onClick={() => {
+        goToDoc(query, theorem_id, rank);
+      }}
+    >
+      <a
+        href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem_name}#doc`}
+        target="_blank"
+      >
+        Go To Doc
+      </a>
+    </Button>
+  );
+};

@@ -1,42 +1,42 @@
 version: "3.8"
 services:
-  backend:
-    image: state-search-be:latest
-    depends_on:
-      - pg
-      - qdrant
-    environment:
-      - DATABASE_URL=postgresql://postgres:vgASaJGlnZ6uZ9VNAJtat0CSczn2v0NAKHDYPrOtZWaD5XFbos8cc72cTj6s@pg:5432/statesearch
-    ports:
-      - 7720:7720
-    volumes:
-      - ./Lean_State_Search_Random/Finetune_Model/410_stable_random_s0_d0:/code/model:z
+  # backend:
+  #   image: state-search-be:latest
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #   depends_on:
+  #     - pg
+  #     - qdrant
+  #   ports:
+  #     - ${BACKEND_PORT}:7720
+  #   volumes:
+  #     - ${MODEL_NAME_OR_PATH}:/code/model:z
 
-  frontend:
-    image: lean-state-search:latest
-    depends_on:
-      - pg
-      - backend
-    ports:
-      - 3000:3000
+  # frontend:
+  #   image: lean-state-search:latest
+  #   depends_on:
+  #     - pg
+  #     - backend
+  #   ports:
+  #     - ${FRONTEND_PORT}:3000
   pg:
     container_name: state-search-db
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: vgASaJGlnZ6uZ9VNAJtat0CSczn2v0NAKHDYPrOtZWaD5XFbos8cc72cTj6s
-      POSTGRES_DB: statesearch
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=statesearch
     ports:
-      - 5432:5432
-    # network_mode: "host"
+      - ${POSTGRES_PORT}:5432
     volumes:
-      - ~/.docker/.persist/state-search/pg-data:/var/lib/postgresql/data
+      - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
   qdrant:
     container_name: state-search-vb
     image: qdrant/qdrant
     depends_on:
       - pg
     ports:
-      - 6333:6333
+      - ${QDRANT_PORT}:6333
     volumes:
       - ${QDRANT_VOLUME}:/qdrant/storage:z

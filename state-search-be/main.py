@@ -7,20 +7,32 @@ from state_search_be.state_search.v1.state_search_pb2_grpc import (
 )
 from prisma import Prisma
 from qdrant_client import QdrantClient
-from dotenv import load_dotenv
+import os
+
+if os.getenv("MODE") == "docker":
+    os.environ["DATABASE_URL"] = (
+        f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@pg:5432/statesearch"
+    )
+else:
+    os.environ["DATABASE_URL"] = (
+        f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:{os.getenv('POSTGRES_PORT')}/statesearch"
+    )
 
 
 async def serve() -> None:
-    load_dotenv()
     db = Prisma()
-    vb = QdrantClient("http://qdrant:6333")
+    if os.getenv("MODE") == "docker":
+        qdrant_url = "http://qdrant:6333"
+    else:
+        qdrant_url = f"http://localhost:{os.getenv('QDRANT_PORT')}"
+    vb = QdrantClient(qdrant_url)
     await db.connect()
     server = grpc.aio.server()
     add_LeanStateSearchServiceServicer_to_server(
         LeanStateSearchServicer(db=db, vb=vb), server
     )
 
-    listen_addr = "[::]:7720"
+    listen_addr = f"[::]:{os.getenv('BACKEND_PORT')}"
     server.add_insecure_port(listen_addr)
     logging.info("Starting server on %s", listen_addr)
 

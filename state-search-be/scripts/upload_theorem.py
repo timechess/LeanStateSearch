@@ -3,6 +3,11 @@ import jsonlines
 import argparse
 import asyncio
 from tqdm import tqdm
+import os
+
+os.environ["DATABASE_URL"] = (
+    f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@localhost:{os.getenv('POSTGRES_PORT')}/statesearch"
+)
 
 
 async def main():

@@ -22,5 +22,8 @@ pkgs.mkShell rec {
       export PRISMA_FMT_BINARY="${pkgs.prisma-engines}/bin/prisma-fmt"
       export PATH="$PWD/node_modules/.bin:$PATH"
       export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+      set -a
+      source .env
+      set +a
     '';
 }

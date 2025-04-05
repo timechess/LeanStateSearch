@@ -4,7 +4,31 @@ export function AboutPage() {
       <div className="mb-8">
         <h2 className="text-4xl font-bold mb-4">News</h2>
         <p className="text-2xl">
-          March 2025 Update: Lean State Search is now publicly available!
+          2025/04/05 Update:{" "}
+          <a
+            href="https://github.com/ruc-ai4math/LeanStateSearch"
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Self-host Lean State Search
+          </a>{" "}
+          is available!
+        </p>
+        <p className="text-2xl">
+          2025/03/07 Update:{" "}
+          <a
+            href="https://github.com/leanprover-community/LeanSearchClient"
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LeanSearchClient
+          </a>{" "}
+          now supports query Lean State Search from within Lean.
+        </p>
+        <p className="text-2xl">
+          2025/03/05 Update: Lean State Search is now publicly available!
         </p>
       </div>
 
@@ -93,10 +117,6 @@ np : ¬Nat.Prime n
               </a>
             </li>
           </ul>
-          <p className="mt-8 italic text-gray-600">
-            Coming Soon: Self-hosting and custom deployment options for the
-            search engine!
-          </p>
         </div>
       </div>
 
