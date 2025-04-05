@@ -100,7 +100,7 @@ Now your application can work properly in `http://localhost:${FRONTEND_PORT}`.
 
 The code for training the model from scratch and reproducing the experimental results of our paper can be found [here](https://github.com/ruc-ai4math/Premise-Retrieval).
 
-### API documentation
+### Call from API
 
 The application can be accessed through API requests. You can refer to [LeanSearchClient](https://github.com/leanprover-community/LeanSearchClient) as an example. The format is as follows:
 
