@@ -15,12 +15,14 @@ async def main():
     feedbacks = await db.feedback.find_many()
     with jsonlines.open(args.save_path, "w") as f:
         for feedback in tqdm(feedbacks):
-            f.write({
-              "id": feedback.id,
-              "query": feedback.query,
-              "theorem_id": feedback.theorem_id,
-              "relevant": feedback.relevant,
-            })
+            f.write(
+                {
+                    "id": feedback.id,
+                    "query": feedback.query,
+                    "theorem_id": feedback.theorem_id,
+                    "relevant": feedback.relevant,
+                }
+            )
     await db.disconnect()
 
 

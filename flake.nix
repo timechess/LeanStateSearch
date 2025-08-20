@@ -10,9 +10,19 @@
     flake-utils,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
+      pkgs = import nixpkgs {inherit system; config.allowUnfree = true;};
     in {
       formatter = pkgs.alejandra;
       devShells.default = import ./shell.nix {inherit pkgs system;};
+
+      packages = {
+        state-search-be-image = pkgs.dockerTools.buildImage {
+          name = "state-search-be";
+          tag = "latest";
+          config = {
+            entrypoint = [""];
+          };
+        };
+      };
     });
 }

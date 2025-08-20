@@ -614,3 +614,286 @@ export class CallResponse extends Message<CallResponse> {
     return proto3.util.equals(CallResponse, a, b);
   }
 }
+
+/**
+ * @generated from message state_search.v1.LeanNode
+ */
+export class LeanNode extends Message<LeanNode> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * @generated from field: string const_category = 2;
+   */
+  constCategory = "";
+
+  /**
+   * @generated from field: string const_type = 3;
+   */
+  constType = "";
+
+  /**
+   * @generated from field: string module = 4;
+   */
+  module = "";
+
+  /**
+   * @generated from field: string doc_string = 5;
+   */
+  docString = "";
+
+  /**
+   * @generated from field: string informal_name = 6;
+   */
+  informalName = "";
+
+  /**
+   * @generated from field: string informal_statement = 7;
+   */
+  informalStatement = "";
+
+  constructor(data?: PartialMessage<LeanNode>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.LeanNode";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    {
+      no: 2,
+      name: "const_category",
+      kind: "scalar",
+      T: 9 /* ScalarType.STRING */,
+    },
+    { no: 3, name: "const_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "module", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "doc_string", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    {
+      no: 6,
+      name: "informal_name",
+      kind: "scalar",
+      T: 9 /* ScalarType.STRING */,
+    },
+    {
+      no: 7,
+      name: "informal_statement",
+      kind: "scalar",
+      T: 9 /* ScalarType.STRING */,
+    },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): LeanNode {
+    return new LeanNode().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): LeanNode {
+    return new LeanNode().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): LeanNode {
+    return new LeanNode().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a: LeanNode | PlainMessage<LeanNode> | undefined,
+    b: LeanNode | PlainMessage<LeanNode> | undefined,
+  ): boolean {
+    return proto3.util.equals(LeanNode, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.LeanEdge
+ */
+export class LeanEdge extends Message<LeanEdge> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string source = 2;
+   */
+  source = "";
+
+  /**
+   * @generated from field: string target = 3;
+   */
+  target = "";
+
+  /**
+   * @generated from field: int32 weight = 4;
+   */
+  weight = 0;
+
+  constructor(data?: PartialMessage<LeanEdge>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.LeanEdge";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "source", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "target", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "weight", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): LeanEdge {
+    return new LeanEdge().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): LeanEdge {
+    return new LeanEdge().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): LeanEdge {
+    return new LeanEdge().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a: LeanEdge | PlainMessage<LeanEdge> | undefined,
+    b: LeanEdge | PlainMessage<LeanEdge> | undefined,
+  ): boolean {
+    return proto3.util.equals(LeanEdge, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.GetNodesAndEdgesRequest
+ */
+export class GetNodesAndEdgesRequest extends Message<GetNodesAndEdgesRequest> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  constructor(data?: PartialMessage<GetNodesAndEdgesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.GetNodesAndEdgesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): GetNodesAndEdgesRequest {
+    return new GetNodesAndEdgesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodesAndEdgesRequest {
+    return new GetNodesAndEdgesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodesAndEdgesRequest {
+    return new GetNodesAndEdgesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a:
+      | GetNodesAndEdgesRequest
+      | PlainMessage<GetNodesAndEdgesRequest>
+      | undefined,
+    b:
+      | GetNodesAndEdgesRequest
+      | PlainMessage<GetNodesAndEdgesRequest>
+      | undefined,
+  ): boolean {
+    return proto3.util.equals(GetNodesAndEdgesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.GetNodesAndEdgesResponse
+ */
+export class GetNodesAndEdgesResponse extends Message<GetNodesAndEdgesResponse> {
+  /**
+   * @generated from field: repeated state_search.v1.LeanNode nodes = 1;
+   */
+  nodes: LeanNode[] = [];
+
+  /**
+   * @generated from field: repeated state_search.v1.LeanEdge edges = 2;
+   */
+  edges: LeanEdge[] = [];
+
+  constructor(data?: PartialMessage<GetNodesAndEdgesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.GetNodesAndEdgesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "nodes", kind: "message", T: LeanNode, repeated: true },
+    { no: 2, name: "edges", kind: "message", T: LeanEdge, repeated: true },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): GetNodesAndEdgesResponse {
+    return new GetNodesAndEdgesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodesAndEdgesResponse {
+    return new GetNodesAndEdgesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodesAndEdgesResponse {
+    return new GetNodesAndEdgesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a:
+      | GetNodesAndEdgesResponse
+      | PlainMessage<GetNodesAndEdgesResponse>
+      | undefined,
+    b:
+      | GetNodesAndEdgesResponse
+      | PlainMessage<GetNodesAndEdgesResponse>
+      | undefined,
+  ): boolean {
+    return proto3.util.equals(GetNodesAndEdgesResponse, a, b);
+  }
+}

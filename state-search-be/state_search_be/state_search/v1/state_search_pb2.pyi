@@ -88,3 +88,47 @@ class CallRequest(_message.Message):
 class CallResponse(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
+
+class LeanNode(_message.Message):
+    __slots__ = ("name", "const_category", "const_type", "module", "doc_string", "informal_name", "informal_statement")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    CONST_CATEGORY_FIELD_NUMBER: _ClassVar[int]
+    CONST_TYPE_FIELD_NUMBER: _ClassVar[int]
+    MODULE_FIELD_NUMBER: _ClassVar[int]
+    DOC_STRING_FIELD_NUMBER: _ClassVar[int]
+    INFORMAL_NAME_FIELD_NUMBER: _ClassVar[int]
+    INFORMAL_STATEMENT_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    const_category: str
+    const_type: str
+    module: str
+    doc_string: str
+    informal_name: str
+    informal_statement: str
+    def __init__(self, name: _Optional[str] = ..., const_category: _Optional[str] = ..., const_type: _Optional[str] = ..., module: _Optional[str] = ..., doc_string: _Optional[str] = ..., informal_name: _Optional[str] = ..., informal_statement: _Optional[str] = ...) -> None: ...
+
+class LeanEdge(_message.Message):
+    __slots__ = ("id", "source", "target", "weight")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    SOURCE_FIELD_NUMBER: _ClassVar[int]
+    TARGET_FIELD_NUMBER: _ClassVar[int]
+    WEIGHT_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    source: str
+    target: str
+    weight: int
+    def __init__(self, id: _Optional[str] = ..., source: _Optional[str] = ..., target: _Optional[str] = ..., weight: _Optional[int] = ...) -> None: ...
+
+class GetNodesAndEdgesRequest(_message.Message):
+    __slots__ = ("name",)
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class GetNodesAndEdgesResponse(_message.Message):
+    __slots__ = ("nodes", "edges")
+    NODES_FIELD_NUMBER: _ClassVar[int]
+    EDGES_FIELD_NUMBER: _ClassVar[int]
+    nodes: _containers.RepeatedCompositeFieldContainer[LeanNode]
+    edges: _containers.RepeatedCompositeFieldContainer[LeanEdge]
+    def __init__(self, nodes: _Optional[_Iterable[_Union[LeanNode, _Mapping]]] = ..., edges: _Optional[_Iterable[_Union[LeanEdge, _Mapping]]] = ...) -> None: ...

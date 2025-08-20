@@ -64,3 +64,33 @@ message CallRequest {
 }
 
 message CallResponse {}
+
+service LeanGraphService {
+  rpc GetNodesAndEdges(GetNodesAndEdgesRequest) returns (GetNodesAndEdgesResponse);
+}
+
+message LeanNode {
+  string name = 1;
+  string const_category = 2;
+  string const_type = 3;
+  string module = 4;
+  string doc_string = 5;
+  string informal_name = 6;
+  string informal_statement = 7;
+}
+
+message LeanEdge {
+  string id = 1;
+  string source = 2;
+  string target = 3;
+  int32 weight = 4;
+}
+
+message GetNodesAndEdgesRequest {
+  string name = 1;
+}
+
+message GetNodesAndEdgesResponse {
+  repeated LeanNode nodes = 1;
+  repeated LeanEdge edges = 2;
+}

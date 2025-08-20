@@ -1,8 +1,10 @@
 import os
 from state_search_be.state_search.v1.state_search_pb2_grpc import (
+    LeanGraphServiceServicer,
     LeanStateSearchServiceServicer,
 )
 from state_search_be.state_search.v1.state_search_pb2 import (
+    GetNodesAndEdgesRequest,
     SearchTheoremRequest,
     SearchTheoremResponse,
     FeedbackRequest,
@@ -13,13 +15,17 @@ from state_search_be.state_search.v1.state_search_pb2 import (
     CallRequest,
     CallResponse,
     Theorem,
+    LeanEdge as ProtoLeanEdge,
+    LeanNode as ProtoLeanNode,
+    GetNodesAndEdgesResponse,
 )
 from dotenv import load_dotenv
 import re
-from flag_model import FlagModel
+from .flag_model import FlagModel
 from prisma import Prisma
 from prisma.errors import RawQueryError
 from qdrant_client import QdrantClient
+from lean_graph_tool import LeanGraph
 
 load_dotenv()
 
@@ -139,3 +145,56 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
         call_type = request.call_type
         await self.db.call.create(data={"type": call_type})
         return CallResponse()
+
+
+class LeanGraphServicer(LeanGraphServiceServicer):
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.graph = LeanGraph.load_from_json(file_path)
+
+    async def GetNodesAndEdges(self, request: GetNodesAndEdgesRequest, context):
+        name = request.name
+        node = self.graph.get_by_name(name)
+        body_deps = self.graph.get_body_deps_by_name(name)
+        type_deps = self.graph.get_type_deps_by_name(name)
+        body_edges = [
+            ProtoLeanEdge(
+                id=f"body_{name}->{dep.name}",
+                source=name,
+                target=dep.name,
+                weight=1,
+            )
+            for dep in body_deps
+        ]
+        type_edges = [
+            ProtoLeanEdge(
+                id=f"type_{name}->{dep.name}",
+                source=name,
+                target=dep.name,
+                weight=0,
+            )
+            for dep in type_deps
+        ]
+        nodes = [
+            ProtoLeanNode(
+                name=dep.name,
+                const_category=dep.const_category,
+                const_type=dep.const_type,
+                module=dep.module,
+                doc_string=dep.doc_string,
+                informal_name=dep.informal_name,
+                informal_statement=dep.informal_statement,
+            )
+            for dep in body_deps + type_deps
+        ] + [
+            ProtoLeanNode(
+                name=name,
+                const_category=node.const_category,
+                const_type=node.const_type,
+                module=node.module,
+                doc_string=node.doc_string,
+                informal_name=node.informal_name,
+                informal_statement=node.informal_statement,
+            )
+        ]
+        return GetNodesAndEdgesResponse(nodes=nodes, edges=body_edges + type_edges)

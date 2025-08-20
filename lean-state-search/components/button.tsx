@@ -105,19 +105,29 @@ export const GoToDocButton: React.FC<{
   theorem_name: string;
 }> = ({ query, theorem_id, rank, theorem_name }) => {
   return (
-    <Button
-      variant="ghost"
-      className="text-lg"
+    <a
+      href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem_name}#doc`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200"
       onClick={() => {
         goToDoc(query, theorem_id, rank);
       }}
     >
-      <a
-        href={`https://leanprover-community.github.io/mathlib4_docs/find/?pattern=${theorem_name}#doc`}
-        target="_blank"
+      <svg
+        className="w-4 h-4 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        Go To Doc
-      </a>
-    </Button>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+        />
+      </svg>
+      Go to Doc
+    </a>
   );
 };

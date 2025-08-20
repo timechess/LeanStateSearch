@@ -17,7 +17,7 @@ dev-fe:
 	(cd ${FRONTEND} && PORT=${FRONTEND_PORT} pnpm run dev)
 
 start-be:
-	(cd ${BACKEND} && poetry run python main.py)
+	uv run --directory=${BACKEND} python main.py
 
 build-images:
 	(cd ${FRONTEND} && MODE=docker docker build -t ${FRONTEND}:latest .)
@@ -26,7 +26,7 @@ build-images:
 init-service:
 	(docker compose up --wait)
 	(sleep 5 && ./scripts/init-pg.sh)
-	(cd ${BACKEND} && poetry install && poetry run prisma db push)
+	(cd ${BACKEND} && uv sync && uv run prisma db push)
 
 proto:
 	(cd protos && buf generate)

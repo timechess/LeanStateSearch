@@ -1,33 +1,42 @@
-[tool.poetry]
-authors = ["timechess <tyc221@ruc.edu.cn>"]
-description = ""
+[project]
 name = "state_search_be"
-packages = [
-    { include = "state_search_be" },
-    { include = "state_search", from = "state_search_be" },
-]
-readme = "README.md"
 version = "0.1.0"
+description = ""
+authors = [
+    { name = "timechess", email = "tyc221@ruc.edu.cn" }
+]
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "grpcio>=1.69.0,<2.0.0",
+    "grpcio-tools>=1.69.0,<2.0.0",
+    "jsonlines>=4.0.0,<5.0.0",
+    "prisma>=0.15.0,<0.16.0",
+    "protobuf>=5.29.3,<6.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "sentence-transformers>=3.3.1,<4.0.0",
+    "qdrant-client>=1.13.2,<2.0.0",
+    "mcp[cli]>=1.6.0,<2.0.0",
+    "maturin>=1.9.3",
+]
 
-[tool.poetry.dependencies]
-grpcio = "^1.69.0"
-grpcio-tools = "^1.69.0"
-jsonlines = "^4.0.0"
-prisma = "^0.15.0"
-protobuf = "^5.29.3"
-python = ">=3.11, <3.13"
-python-dotenv = "^1.0.0"
-sentence-transformers = "^3.3.1"
-qdrant-client = "^1.13.2"
+[tool.hatch.build.targets.sdist]
+include = [
+    "state_search_be",
+    "state_search_be/state_search",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "state_search_be",
+    "state_search_be/state_search",
+]
+
+[tool.hatch.build.targets.wheel.sources]
+"state_search_be/state_search" = "state_search"
 
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
-
-[[tool.poetry.source]]
-name = "mirrors"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
-priority = "primary"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
 line-length = 88

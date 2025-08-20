@@ -1,25 +1,25 @@
 version: "3.8"
 services:
-  backend:
-    image: state-search-be:latest
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    depends_on:
-      - pg
-      - qdrant
-    ports:
-      - ${BACKEND_PORT}:7720
-    volumes:
-      - ${MODEL_NAME_OR_PATH}:/code/model:z
+  # backend:
+  #   image: state-search-be:latest
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #   depends_on:
+  #     - pg
+  #     - qdrant
+  #   ports:
+  #     - ${BACKEND_PORT}:7720
+  #   volumes:
+  #     - ${MODEL_NAME_OR_PATH}:/code/model:z
 
-  frontend:
-    image: lean-state-search:latest
-    depends_on:
-      - pg
-      - backend
-    ports:
-      - ${FRONTEND_PORT}:3000
+  # frontend:
+  #   image: lean-state-search:latest
+  #   depends_on:
+  #     - pg
+  #     - backend
+  #   ports:
+  #     - ${FRONTEND_PORT}:3000
   pg:
     container_name: state-search-db
     image: postgres
@@ -36,6 +36,8 @@ services:
     image: qdrant/qdrant
     depends_on:
       - pg
+    environment:
+      - QDRANT__SERVICE__HTTP_HOST=0.0.0.0
     ports:
       - ${QDRANT_PORT}:6333
     volumes:

@@ -12,6 +12,8 @@ import {
   FeedbackResponse,
   GetAllRevRequest,
   GetAllRevResponse,
+  GetNodesAndEdgesRequest,
+  GetNodesAndEdgesResponse,
   SearchTheoremRequest,
   SearchTheoremResponse,
 } from "./state_search_pb.ts";
@@ -76,6 +78,24 @@ export const LeanStateSearchService = {
       name: "Call",
       I: CallRequest,
       O: CallResponse,
+      kind: MethodKind.Unary,
+    },
+  },
+} as const;
+
+/**
+ * @generated from service state_search.v1.LeanGraphService
+ */
+export const LeanGraphService = {
+  typeName: "state_search.v1.LeanGraphService",
+  methods: {
+    /**
+     * @generated from rpc state_search.v1.LeanGraphService.GetNodesAndEdges
+     */
+    getNodesAndEdges: {
+      name: "GetNodesAndEdges",
+      I: GetNodesAndEdgesRequest,
+      O: GetNodesAndEdgesResponse,
       kind: MethodKind.Unary,
     },
   },

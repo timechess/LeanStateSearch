@@ -1,9 +1,10 @@
 import asyncio
 import grpc
-from state_search_be.api import LeanStateSearchServicer
+from state_search_be.api import LeanStateSearchServicer, LeanGraphServicer
 import logging
 from state_search_be.state_search.v1.state_search_pb2_grpc import (
     add_LeanStateSearchServiceServicer_to_server,
+    add_LeanGraphServiceServicer_to_server,
 )
 from prisma import Prisma
 from qdrant_client import QdrantClient
@@ -30,6 +31,9 @@ async def serve() -> None:
     server = grpc.aio.server()
     add_LeanStateSearchServiceServicer_to_server(
         LeanStateSearchServicer(db=db, vb=vb), server
+    )
+    add_LeanGraphServiceServicer_to_server(
+        LeanGraphServicer(file_path=os.getenv("LEANGRAPH_FILE_PATH")), server
     )
 
     listen_addr = f"[::]:{os.getenv('BACKEND_PORT')}"

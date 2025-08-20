@@ -19,30 +19,67 @@ export default async function StateSearchSearchPage(props: {
   if (query) {
     await call({ callType: 0 });
   }
+
   return (
-    <div className="min-h-screen flex-col items-center justify-center bg-gradient-to-r">
-      <main className="items-center justify-center px-4 text-center">
-        <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="text-6xl font-extrabold text-gray-800 drop-shadow-lg mt-8">
-            Lean State Search
-          </h1>
-          <h3 className="mt-4 text-2xl text-gray-700 max-w-xl">
-            Search Mathlib Theorem with Proof States
-          </h3>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header Section */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            {/* Main Title */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-4">
+              Lean State Search
+            </h1>
+
+            {/* Subtitle */}
+            <h2 className="text-xl sm:text-2xl lg:text-3xl text-gray-600 font-normal max-w-3xl mx-auto leading-relaxed">
+              Search Mathlib Theorems with Proof States
+            </h2>
+          </div>
         </div>
-        <div className="py-10 mt-10">
-          <SearchBox revs={all_revs} />
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        {/* Search Section */}
+        <div className="mb-12">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <SearchBox revs={all_revs} />
+          </div>
+        </div>
+
+        {/* Results or About Section */}
+        <div className="min-h-[400px]">
           {query ? (
-            <StateSearchResultTable
-              query={query}
-              nresult={results}
-              rev={rev ?? "v4.16.0"}
-            />
+            <div className="space-y-6">
+              {/* Results Table */}
+              <StateSearchResultTable
+                query={query}
+                nresult={results}
+                rev={rev ?? all_revs[all_revs.length - 1]}
+              />
+            </div>
           ) : (
-            <AboutPage />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <AboutPage />
+            </div>
           )}
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="mt-20 bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-gray-600">
+            <p className="text-sm">
+              Developed by the AI4Math team at Renmin University of China
+            </p>
+            <p className="text-xs mt-2 text-gray-500">
+              Powered by Next.js and Tailwind CSS
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

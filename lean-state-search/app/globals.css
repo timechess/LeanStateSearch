@@ -71,6 +71,220 @@ body {
   }
 }
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9fafb;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Subtle transitions */
+* {
+  transition-property: color, background-color, border-color, opacity,
+    box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Academic focus states */
+.focus-ring:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 2px #6b7280,
+    0 0 0 4px rgba(107, 114, 128, 0.1);
+}
+
+/* Shiki code highlighting overrides for academic style */
+.shiki {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  font-family: "Geist Mono", "Fira Code", "Monaco", "Consolas",
+    "Liberation Mono", "Courier New", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  margin: 0 !important;
+  overflow-x: auto !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+/* Syntax highlighting colors - academic style */
+.shiki .token.comment {
+  color: #6b7280 !important;
+  font-style: italic !important;
+}
+
+.shiki .token.keyword {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+.shiki .token.string {
+  color: #059669 !important;
+}
+
+.shiki .token.number {
+  color: #dc2626 !important;
+}
+
+.shiki .token.operator {
+  color: #1f2937 !important;
+}
+
+.shiki .token.punctuation {
+  color: #374151 !important;
+}
+
+.shiki .token.function {
+  color: #7c3aed !important;
+  font-weight: 500 !important;
+}
+
+.shiki .token.class-name {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+.shiki .token.variable {
+  color: #1f2937 !important;
+}
+
+.shiki .token.property {
+  color: #7c3aed !important;
+}
+
+.shiki .token.parameter {
+  color: #1f2937 !important;
+  font-style: italic !important;
+}
+
+.shiki .token.type {
+  color: #059669 !important;
+  font-weight: 500 !important;
+}
+
+.shiki .token.namespace {
+  color: #7c3aed !important;
+}
+
+.shiki .token.constant {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+
+.shiki .token.symbol {
+  color: #1f2937 !important;
+}
+
+.shiki .token.boolean {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+
+.shiki .token.null {
+  color: #6b7280 !important;
+  font-style: italic !important;
+}
+
+.shiki .token.undefined {
+  color: #6b7280 !important;
+  font-style: italic !important;
+}
+
+.shiki .token.regex {
+  color: #059669 !important;
+}
+
+.shiki .token.important {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+
+.shiki .token.escape {
+  color: #7c3aed !important;
+}
+
+.shiki .token.tag {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+.shiki .token.attr-name {
+  color: #7c3aed !important;
+}
+
+.shiki .token.attr-value {
+  color: #059669 !important;
+}
+
+.shiki .token.deleted {
+  color: #dc2626 !important;
+  text-decoration: line-through !important;
+}
+
+.shiki .token.inserted {
+  color: #059669 !important;
+  text-decoration: underline !important;
+}
+
+.shiki .token.changed {
+  color: #d97706 !important;
+}
+
+.shiki .token.selector {
+  color: #7c3aed !important;
+}
+
+.shiki .token.prolog {
+  color: #6b7280 !important;
+}
+
+.shiki .token.doctype {
+  color: #6b7280 !important;
+}
+
+.shiki .token.cdata {
+  color: #6b7280 !important;
+}
+
+/* Ensure proper spacing and layout */
+.shiki code {
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  line-height: inherit !important;
+}
+
+.shiki pre {
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  line-height: inherit !important;
+}
+
 code {
   text-wrap: wrap;
   word-break: break-word;

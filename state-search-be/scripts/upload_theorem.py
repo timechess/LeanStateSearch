@@ -23,10 +23,10 @@ async def main():
         for it in tqdm(f.iter()):
             theorems.append(
                 {
-                    "name": it["full_name"],
+                    "name": it["name"],
                     "args": it["args"],
                     "goal": it["goal"],
-                    "module": it["mod_name"],
+                    "module": it["module"],
                     "rev": args.rev,
                 }
             )
