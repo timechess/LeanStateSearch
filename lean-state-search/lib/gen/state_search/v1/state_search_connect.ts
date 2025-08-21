@@ -3,7 +3,22 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CallRequest, CallResponse, ClickRequest, ClickResponse, FeedbackRequest, FeedbackResponse, GetAllRevRequest, GetAllRevResponse, GetDependencyNodesAndEdgesRequest, GetDependencyNodesAndEdgesResponse, GetDependentNodesAndEdgesRequest, GetDependentNodesAndEdgesResponse, SearchTheoremRequest, SearchTheoremResponse } from "./state_search_pb.ts";
+import {
+  CallRequest,
+  CallResponse,
+  ClickRequest,
+  ClickResponse,
+  FeedbackRequest,
+  FeedbackResponse,
+  GetAllRevRequest,
+  GetAllRevResponse,
+  GetDependencyNodesAndEdgesRequest,
+  GetDependencyNodesAndEdgesResponse,
+  GetDependentNodesAndEdgesRequest,
+  GetDependentNodesAndEdgesResponse,
+  SearchTheoremRequest,
+  SearchTheoremResponse,
+} from "./state_search_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -67,7 +82,7 @@ export const LeanStateSearchService = {
       O: CallResponse,
       kind: MethodKind.Unary,
     },
-  }
+  },
 } as const;
 
 /**
@@ -94,6 +109,5 @@ export const LeanGraphService = {
       O: GetDependentNodesAndEdgesResponse,
       kind: MethodKind.Unary,
     },
-  }
+  },
 } as const;
-

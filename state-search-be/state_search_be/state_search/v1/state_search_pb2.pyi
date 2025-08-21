@@ -80,10 +80,12 @@ class ClickResponse(_message.Message):
     def __init__(self) -> None: ...
 
 class CallRequest(_message.Message):
-    __slots__ = ("call_type",)
+    __slots__ = ("call_type", "query")
     CALL_TYPE_FIELD_NUMBER: _ClassVar[int]
+    QUERY_FIELD_NUMBER: _ClassVar[int]
     call_type: int
-    def __init__(self, call_type: _Optional[int] = ...) -> None: ...
+    query: str
+    def __init__(self, call_type: _Optional[int] = ..., query: _Optional[str] = ...) -> None: ...
 
 class CallResponse(_message.Message):
     __slots__ = ()

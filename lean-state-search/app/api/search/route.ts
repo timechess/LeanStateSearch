@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
       rev: rev,
     })
   ).results;
-  await call({ callType: 1 });
+  await call({ callType: 1, query });
   const apiResults = searchResults.map((result) => {
     {
       return {

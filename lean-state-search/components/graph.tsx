@@ -55,7 +55,7 @@ export default function Graph({
     sampledCount: number;
   } | null>(null);
   const [selectedItem, setSelectedItem] = useState<{
-    type: 'node' | 'edge';
+    type: "node" | "edge";
     data: PlainMessage<LeanNode> | PlainMessage<LeanEdge>;
   } | null>(null);
 
@@ -77,7 +77,7 @@ export default function Graph({
       if (data.samplingInfo && data.samplingInfo.wasSampled) {
         setSamplingInfo({
           originalCount: data.samplingInfo.originalNodeCount,
-          sampledCount: data.samplingInfo.sampledNodeCount
+          sampledCount: data.samplingInfo.sampledNodeCount,
         });
         setShowSamplingDialog(true);
       } else {
@@ -137,7 +137,9 @@ export default function Graph({
             </svg>
             <div className="text-sm text-gray-600">
               <p>
-                <span className="font-medium">Tip:</span> Click on any node to view detailed information, or click on edges to see relationship details.
+                <span className="font-medium">Tip:</span> Click on any node to
+                view detailed information, or click on edges to see relationship
+                details.
               </p>
               {nodes.length > 0 && (
                 <p className="mt-1">
@@ -145,8 +147,8 @@ export default function Graph({
                   {nodes.length} nodes and {edges.length} edges
                   {samplingInfo && (
                     <span className="text-blue-600 ml-2">
-                      (backend sampled from {samplingInfo.originalCount} nodes, target
-                      node always included)
+                      (backend sampled from {samplingInfo.originalCount} nodes,
+                      target node always included)
                     </span>
                   )}
                 </p>
@@ -233,13 +235,13 @@ export default function Graph({
                 <div className="mt-2 text-sm text-blue-700">
                   <p>
                     This graph contains {samplingInfo.originalCount} nodes,
-                    which exceeds the display limit of 50. The backend has randomly
-                    sampled {samplingInfo.sampledCount} nodes to ensure optimal
-                    performance.
+                    which exceeds the display limit of 50. The backend has
+                    randomly sampled {samplingInfo.sampledCount} nodes to ensure
+                    optimal performance.
                   </p>
                   <p className="mt-1">
-                    <strong>Note:</strong> The node you&apos;re viewing is always
-                    included in the sample. The displayed edges only show
+                    <strong>Note:</strong> The node you&apos;re viewing is
+                    always included in the sample. The displayed edges only show
                     relationships between the sampled nodes.
                   </p>
                 </div>
@@ -323,23 +325,39 @@ export default function Graph({
             {/* Header */}
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">
-                {selectedItem.type === "node" ? "Node Information" : "Edge Information"}
+                {selectedItem.type === "node"
+                  ? "Node Information"
+                  : "Edge Information"}
               </h3>
               <button
                 onClick={() => setSelectedItem(null)}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
 
             {/* Content */}
             {selectedItem.type === "node" ? (
-              <NodeInfoSidebar node={selectedItem.data as PlainMessage<LeanNode>} />
+              <NodeInfoSidebar
+                node={selectedItem.data as PlainMessage<LeanNode>}
+              />
             ) : (
-              <EdgeInfoSidebar edge={selectedItem.data as PlainMessage<LeanEdge>} />
+              <EdgeInfoSidebar
+                edge={selectedItem.data as PlainMessage<LeanEdge>}
+              />
             )}
           </div>
         </div>
@@ -354,34 +372,50 @@ function NodeInfoSidebar({ node }: { node: PlainMessage<LeanNode> }) {
     <div className="space-y-6">
       {/* Name */}
       <div>
-        <label className="text-sm font-medium text-gray-500 block mb-2">Name</label>
+        <label className="text-sm font-medium text-gray-500 block mb-2">
+          Name
+        </label>
         <p className="text-gray-900 font-mono text-sm break-all">{node.name}</p>
       </div>
 
       {/* Category */}
       <div>
-        <label className="text-sm font-medium text-gray-500 block mb-2">Type</label>
+        <label className="text-sm font-medium text-gray-500 block mb-2">
+          Type
+        </label>
         <div className="flex items-center space-x-2">
           <div
             className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: color_map[node.constCategory as keyof typeof color_map] || color_map.default }}
+            style={{
+              backgroundColor:
+                color_map[node.constCategory as keyof typeof color_map] ||
+                color_map.default,
+            }}
           ></div>
-          <span className="text-gray-900 font-medium capitalize">{node.constCategory || 'Unknown'}</span>
+          <span className="text-gray-900 font-medium capitalize">
+            {node.constCategory || "Unknown"}
+          </span>
         </div>
       </div>
 
       {/* Module */}
       {node.module && (
         <div>
-          <label className="text-sm font-medium text-gray-500 block mb-2">Module</label>
-          <p className="text-gray-900 font-mono text-sm break-all">{node.module}</p>
+          <label className="text-sm font-medium text-gray-500 block mb-2">
+            Module
+          </label>
+          <p className="text-gray-900 font-mono text-sm break-all">
+            {node.module}
+          </p>
         </div>
       )}
 
       {/* Doc String */}
       {node.docString && (
         <div>
-          <label className="text-sm font-medium text-gray-500 block mb-2">Doc String</label>
+          <label className="text-sm font-medium text-gray-500 block mb-2">
+            Doc String
+          </label>
           <div className="bg-gray-50 p-3 rounded border border-gray-200">
             <Markdown content={node.docString} />
           </div>
@@ -391,7 +425,9 @@ function NodeInfoSidebar({ node }: { node: PlainMessage<LeanNode> }) {
       {/* Informal Name */}
       {node.informalName && (
         <div>
-          <label className="text-sm font-medium text-gray-500 block mb-2">Informal Name</label>
+          <label className="text-sm font-medium text-gray-500 block mb-2">
+            Informal Name
+          </label>
           <div className="bg-gray-50 p-3 rounded border border-gray-200">
             <Markdown content={node.informalName} />
           </div>
@@ -401,7 +437,9 @@ function NodeInfoSidebar({ node }: { node: PlainMessage<LeanNode> }) {
       {/* Informal Statement */}
       {node.informalStatement && (
         <div>
-          <label className="text-sm font-medium text-gray-500 block mb-2">Informal Statement</label>
+          <label className="text-sm font-medium text-gray-500 block mb-2">
+            Informal Statement
+          </label>
           <div className="bg-gray-50 p-3 rounded border border-gray-200">
             <Markdown content={node.informalStatement} />
           </div>
@@ -414,8 +452,18 @@ function NodeInfoSidebar({ node }: { node: PlainMessage<LeanNode> }) {
           href={`/graph/${encodeURIComponent(node.name)}`}
           className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-purple-600 bg-purple-50 border border-purple-200 rounded-md hover:bg-purple-100 hover:border-purple-300 transition-colors"
         >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7" />
+          <svg
+            className="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7"
+            />
           </svg>
           View Graph
         </a>
@@ -426,8 +474,18 @@ function NodeInfoSidebar({ node }: { node: PlainMessage<LeanNode> }) {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 hover:border-blue-300 transition-colors"
         >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          <svg
+            className="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
           </svg>
           View Docs
         </a>
@@ -438,8 +496,18 @@ function NodeInfoSidebar({ node }: { node: PlainMessage<LeanNode> }) {
           }}
           className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300 transition-colors"
         >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          <svg
+            className="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
           </svg>
           Copy Name
         </button>
@@ -454,22 +522,32 @@ function EdgeInfoSidebar({ edge }: { edge: PlainMessage<LeanEdge> }) {
     <div className="space-y-6">
       {/* Source */}
       <div>
-        <label className="text-sm font-medium text-gray-500 block mb-2">Source</label>
-        <p className="text-gray-900 font-mono text-sm break-all">{edge.source}</p>
+        <label className="text-sm font-medium text-gray-500 block mb-2">
+          Source
+        </label>
+        <p className="text-gray-900 font-mono text-sm break-all">
+          {edge.source}
+        </p>
       </div>
 
       {/* Target */}
       <div>
-        <label className="text-sm font-medium text-gray-500 block mb-2">Target</label>
-        <p className="text-gray-900 font-mono text-sm break-all">{edge.target}</p>
+        <label className="text-sm font-medium text-gray-500 block mb-2">
+          Target
+        </label>
+        <p className="text-gray-900 font-mono text-sm break-all">
+          {edge.target}
+        </p>
       </div>
 
       {/* Edge Type */}
       <div>
-        <label className="text-sm font-medium text-gray-500 block mb-2">Relationship</label>
+        <label className="text-sm font-medium text-gray-500 block mb-2">
+          Relationship
+        </label>
         <div className="flex items-center space-x-2">
           <span className="text-gray-900 font-medium">
-            {edge.edgeType || 'Unknown'}
+            {edge.edgeType || "Unknown"}
           </span>
         </div>
       </div>

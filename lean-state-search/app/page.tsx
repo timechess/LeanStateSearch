@@ -17,7 +17,7 @@ export default async function StateSearchSearchPage(props: {
   const rev = searchParams?.rev;
   const all_revs = (await getAllRev({})).revs;
   if (query) {
-    await call({ callType: 0 });
+    await call({ callType: 0, query });
   }
 
   return (

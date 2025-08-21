@@ -61,6 +61,7 @@ message ClickResponse {}
 
 message CallRequest {
   int32 call_type = 1;
+  string query = 2;
 }
 
 message CallResponse {}

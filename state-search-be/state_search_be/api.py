@@ -41,11 +41,15 @@ def random_sample_with_target(nodes, edges, target_name, max_nodes=50):
     original_count = len(nodes)
 
     if len(nodes) <= max_nodes:
-        return nodes, edges, {
-            'was_sampled': False,
-            'original_node_count': original_count,
-            'sampled_node_count': len(nodes)
-        }
+        return (
+            nodes,
+            edges,
+            {
+                "was_sampled": False,
+                "original_node_count": original_count,
+                "sampled_node_count": len(nodes),
+            },
+        )
 
     # Find the target node
     target_node = None
@@ -68,15 +72,20 @@ def random_sample_with_target(nodes, edges, target_name, max_nodes=50):
 
     # Filter edges to only include those between sampled nodes
     sampled_edges = [
-        edge for edge in edges
+        edge
+        for edge in edges
         if edge.source in sampled_names and edge.target in sampled_names
     ]
 
-    return sampled_nodes, sampled_edges, {
-        'was_sampled': True,
-        'original_node_count': original_count,
-        'sampled_node_count': len(sampled_nodes)
-    }
+    return (
+        sampled_nodes,
+        sampled_edges,
+        {
+            "was_sampled": True,
+            "original_node_count": original_count,
+            "sampled_node_count": len(sampled_nodes),
+        },
+    )
 
 
 class LeanStateSearchServicer(LeanStateSearchServiceServicer):
@@ -192,7 +201,7 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
 
     async def Call(self, request: CallRequest, context):
         call_type = request.call_type
-        await self.db.call.create(data={"type": call_type})
+        await self.db.call.create(data={"type": call_type, "query": request.query})
         return CallResponse()
 
 
@@ -257,9 +266,9 @@ class LeanGraphServicer(LeanGraphServiceServicer):
 
         # Create sampling info
         sampling_info = SamplingInfo(
-            was_sampled=sampling_data['was_sampled'],
-            original_node_count=sampling_data['original_node_count'],
-            sampled_node_count=sampling_data['sampled_node_count']
+            was_sampled=sampling_data["was_sampled"],
+            original_node_count=sampling_data["original_node_count"],
+            sampled_node_count=sampling_data["sampled_node_count"],
         )
 
         return GetDependencyNodesAndEdgesResponse(
@@ -325,9 +334,9 @@ class LeanGraphServicer(LeanGraphServiceServicer):
 
         # Create sampling info
         sampling_info = SamplingInfo(
-            was_sampled=sampling_data['was_sampled'],
-            original_node_count=sampling_data['original_node_count'],
-            sampled_node_count=sampling_data['sampled_node_count']
+            was_sampled=sampling_data["was_sampled"],
+            original_node_count=sampling_data["original_node_count"],
+            sampled_node_count=sampling_data["sampled_node_count"],
         )
 
         return GetDependentNodesAndEdgesResponse(
