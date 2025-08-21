@@ -39,6 +39,20 @@ wheels = [
 ]
 
 [[package]]
+name = "camel-converter"
+version = "4.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/3d/dd783586dc0c4aee5b6b88489666fdb2c0c344ea0aa8a5c10746cc423707/camel_converter-4.0.1.tar.gz", hash = "sha256:401414549ae4ac4073e38cdc4aa6d464dc534fc40aa06ff787bf0960b0c86535", size = 38915, upload-time = "2024-10-08T16:55:39.427Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/e5/806359514cc8305f047bd6d39d63890298c0596f7328b534059724bd1a9e/camel_converter-4.0.1-py3-none-any.whl", hash = "sha256:0cba7ca1354a29ca2191983deecc9dcf28889f606c28d6ed18ac7d4586b163ac", size = 6243, upload-time = "2024-10-08T16:55:37.769Z" },
+]
+
+[package.optional-dependencies]
+pydantic = [
+    { name = "pydantic" },
+]
+
+[[package]]
 name = "certifi"
 version = "2025.1.31"
 source = { registry = "https://pypi.org/simple" }
@@ -417,6 +431,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
+]
+
+[[package]]
+name = "meilisearch"
+version = "0.37.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "camel-converter", extra = ["pydantic"] },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/03/4b/36c1c288b1485c9a7a507ea139f1c65a1dee66ae60e820a1437507a3d899/meilisearch-0.37.0.tar.gz", hash = "sha256:a8c0e947d9029b26e833d91ba818cdd56be478756521ce8fe6bcc3178e916ed7", size = 28646, upload-time = "2025-08-20T07:48:57.16Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bf/25/ff33395a9c34960e7f875eec70bc75d80bb53a75acb743f9963e53254e9f/meilisearch-0.37.0-py3-none-any.whl", hash = "sha256:313d5046fffaec4d89480298d3680e64d3c1e7c7577b7f6765a092fcf56d8571", size = 29165, upload-time = "2025-08-20T07:48:56.263Z" },
 ]
 
 [[package]]
@@ -1055,6 +1082,7 @@ dependencies = [
     { name = "jsonlines" },
     { name = "maturin" },
     { name = "mcp", extra = ["cli"] },
+    { name = "meilisearch" },
     { name = "prisma" },
     { name = "protobuf" },
     { name = "python-dotenv" },
@@ -1069,6 +1097,7 @@ requires-dist = [
     { name = "jsonlines", specifier = ">=4.0.0,<5.0.0" },
     { name = "maturin", specifier = ">=1.9.3" },
     { name = "mcp", extras = ["cli"], specifier = ">=1.6.0,<2.0.0" },
+    { name = "meilisearch", specifier = ">=0.35.0,<1.0.0" },
     { name = "prisma", specifier = ">=0.15.0,<0.16.0" },
     { name = "protobuf", specifier = ">=5.29.3,<6.0.0" },
     { name = "python-dotenv", specifier = ">=1.0.0,<2.0.0" },

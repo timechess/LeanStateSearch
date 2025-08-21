@@ -42,3 +42,17 @@ services:
       - ${QDRANT_PORT}:6333
     volumes:
       - ${QDRANT_VOLUME}:/qdrant/storage:z
+
+  meilisearch:
+    container_name: state-search-meilisearch
+    image: getmeili/meilisearch:latest
+    depends_on:
+      - pg
+    environment:
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-masterKey}
+      - MEILI_ENV=development
+    ports:
+      - ${MEILI_PORT:-7700}:7700
+    volumes:
+      - ${MEILI_VOLUME:-${HOME}/meili_data}:/meili_data
+    command: meilisearch --env development --master-key ${MEILI_MASTER_KEY:-masterKey} --db-path /meili_data

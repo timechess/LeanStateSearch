@@ -162,3 +162,17 @@ class SamplingInfo(_message.Message):
     original_node_count: int
     sampled_node_count: int
     def __init__(self, was_sampled: bool = ..., original_node_count: _Optional[int] = ..., sampled_node_count: _Optional[int] = ...) -> None: ...
+
+class GetNodeSuggestionsRequest(_message.Message):
+    __slots__ = ("query", "max_suggestions")
+    QUERY_FIELD_NUMBER: _ClassVar[int]
+    MAX_SUGGESTIONS_FIELD_NUMBER: _ClassVar[int]
+    query: str
+    max_suggestions: int
+    def __init__(self, query: _Optional[str] = ..., max_suggestions: _Optional[int] = ...) -> None: ...
+
+class GetNodeSuggestionsResponse(_message.Message):
+    __slots__ = ("suggestions",)
+    SUGGESTIONS_FIELD_NUMBER: _ClassVar[int]
+    suggestions: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, suggestions: _Optional[_Iterable[str]] = ...) -> None: ...

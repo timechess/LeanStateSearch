@@ -16,6 +16,8 @@ import {
   GetDependencyNodesAndEdgesResponse,
   GetDependentNodesAndEdgesRequest,
   GetDependentNodesAndEdgesResponse,
+  GetNodeSuggestionsRequest,
+  GetNodeSuggestionsResponse,
   SearchTheoremRequest,
   SearchTheoremResponse,
 } from "./state_search_pb.ts";
@@ -107,6 +109,15 @@ export const LeanGraphService = {
       name: "GetDependentNodesAndEdges",
       I: GetDependentNodesAndEdgesRequest,
       O: GetDependentNodesAndEdgesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc state_search.v1.LeanGraphService.GetNodeSuggestions
+     */
+    getNodeSuggestions: {
+      name: "GetNodeSuggestions",
+      I: GetNodeSuggestionsRequest,
+      O: GetNodeSuggestionsResponse,
       kind: MethodKind.Unary,
     },
   },

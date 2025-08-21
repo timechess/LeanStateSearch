@@ -17,6 +17,7 @@ dependencies = [
     "qdrant-client>=1.13.2,<2.0.0",
     "mcp[cli]>=1.6.0,<2.0.0",
     "maturin>=1.9.3",
+    "meilisearch>=0.35.0,<1.0.0",
 ]
 
 [tool.hatch.build.targets.sdist]

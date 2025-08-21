@@ -21,10 +21,13 @@ from state_search_be.state_search.v1.state_search_pb2 import (
     GetDependentNodesAndEdgesRequest,
     GetDependentNodesAndEdgesResponse,
     SamplingInfo,
+    GetNodeSuggestionsRequest,
+    GetNodeSuggestionsResponse,
 )
 from dotenv import load_dotenv
 import re
 import random
+import meilisearch
 from .flag_model import FlagModel
 from prisma import Prisma
 from prisma.errors import RawQueryError
@@ -206,8 +209,10 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
 
 
 class LeanGraphServicer(LeanGraphServiceServicer):
-    def __init__(self, db: Prisma):
+    def __init__(self, db: Prisma, meili_client: meilisearch.Client):
         self.db = db
+        self.meili_client = meili_client
+        self.index_name = "lean_nodes"
 
     async def GetDependencyNodesAndEdges(
         self, request: GetDependencyNodesAndEdgesRequest, context
@@ -344,3 +349,67 @@ class LeanGraphServicer(LeanGraphServiceServicer):
             edges=sampled_edges,
             sampling_info=sampling_info,
         )
+
+    async def initialize_meilisearch_index(self):
+        """Initialize the Meilisearch index with all node names"""
+        try:
+            # Get or create the index
+            try:
+                index = self.meili_client.index(self.index_name)
+            except meilisearch.errors.MeiliSearchApiError:
+                # Index doesn't exist, create it
+                index = self.meili_client.create_index(
+                    self.index_name, {"primaryKey": "name"}
+                )
+
+            # Fetch all nodes from database
+            all_nodes = await self.db.leannode.find_many()
+
+            # Prepare documents for indexing
+            documents = [
+                {
+                    "id": i,
+                    "name": node.name,
+                }
+                for i, node in enumerate(all_nodes)
+            ]
+
+            # Add documents to index
+            if documents:
+                index.add_documents(documents)
+                print(f"Initialized Meilisearch index with {len(documents)} nodes")
+            else:
+                print("No nodes found to index")
+
+        except Exception as e:
+            print(f"Failed to initialize Meilisearch index: {e}")
+            raise
+
+    async def GetNodeSuggestions(self, request: GetNodeSuggestionsRequest, context):
+        query = request.query
+        max_suggestions = request.max_suggestions or 10
+
+        if len(query) < 2:
+            return GetNodeSuggestionsResponse(suggestions=[])
+
+        try:
+            # Get the index
+            index = self.meili_client.index(self.index_name)
+
+            # Search using Meilisearch
+            search_results = index.search(
+                query,
+                {
+                    "limit": max_suggestions,
+                },
+            )
+
+            # Extract node names from search results
+            suggestions = [hit["name"] for hit in search_results["hits"]]
+
+            return GetNodeSuggestionsResponse(suggestions=suggestions)
+
+        except Exception as e:
+            print(f"Meilisearch search failed: {e}")
+            # Fallback to empty results if search fails
+            return GetNodeSuggestionsResponse(suggestions=[])

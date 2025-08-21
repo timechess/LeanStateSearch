@@ -1120,3 +1120,130 @@ export class SamplingInfo extends Message<SamplingInfo> {
     return proto3.util.equals(SamplingInfo, a, b);
   }
 }
+
+/**
+ * @generated from message state_search.v1.GetNodeSuggestionsRequest
+ */
+export class GetNodeSuggestionsRequest extends Message<GetNodeSuggestionsRequest> {
+  /**
+   * @generated from field: string query = 1;
+   */
+  query = "";
+
+  /**
+   * @generated from field: int32 max_suggestions = 2;
+   */
+  maxSuggestions = 0;
+
+  constructor(data?: PartialMessage<GetNodeSuggestionsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.GetNodeSuggestionsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    {
+      no: 2,
+      name: "max_suggestions",
+      kind: "scalar",
+      T: 5 /* ScalarType.INT32 */,
+    },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): GetNodeSuggestionsRequest {
+    return new GetNodeSuggestionsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodeSuggestionsRequest {
+    return new GetNodeSuggestionsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodeSuggestionsRequest {
+    return new GetNodeSuggestionsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a:
+      | GetNodeSuggestionsRequest
+      | PlainMessage<GetNodeSuggestionsRequest>
+      | undefined,
+    b:
+      | GetNodeSuggestionsRequest
+      | PlainMessage<GetNodeSuggestionsRequest>
+      | undefined,
+  ): boolean {
+    return proto3.util.equals(GetNodeSuggestionsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message state_search.v1.GetNodeSuggestionsResponse
+ */
+export class GetNodeSuggestionsResponse extends Message<GetNodeSuggestionsResponse> {
+  /**
+   * @generated from field: repeated string suggestions = 1;
+   */
+  suggestions: string[] = [];
+
+  constructor(data?: PartialMessage<GetNodeSuggestionsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "state_search.v1.GetNodeSuggestionsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    {
+      no: 1,
+      name: "suggestions",
+      kind: "scalar",
+      T: 9 /* ScalarType.STRING */,
+      repeated: true,
+    },
+  ]);
+
+  static fromBinary(
+    bytes: Uint8Array,
+    options?: Partial<BinaryReadOptions>,
+  ): GetNodeSuggestionsResponse {
+    return new GetNodeSuggestionsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(
+    jsonValue: JsonValue,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodeSuggestionsResponse {
+    return new GetNodeSuggestionsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(
+    jsonString: string,
+    options?: Partial<JsonReadOptions>,
+  ): GetNodeSuggestionsResponse {
+    return new GetNodeSuggestionsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(
+    a:
+      | GetNodeSuggestionsResponse
+      | PlainMessage<GetNodeSuggestionsResponse>
+      | undefined,
+    b:
+      | GetNodeSuggestionsResponse
+      | PlainMessage<GetNodeSuggestionsResponse>
+      | undefined,
+  ): boolean {
+    return proto3.util.equals(GetNodeSuggestionsResponse, a, b);
+  }
+}

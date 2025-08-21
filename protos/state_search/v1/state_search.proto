@@ -69,6 +69,7 @@ message CallResponse {}
 service LeanGraphService {
   rpc GetDependencyNodesAndEdges(GetDependencyNodesAndEdgesRequest) returns (GetDependencyNodesAndEdgesResponse);
   rpc GetDependentNodesAndEdges(GetDependentNodesAndEdgesRequest) returns (GetDependentNodesAndEdgesResponse);
+  rpc GetNodeSuggestions(GetNodeSuggestionsRequest) returns (GetNodeSuggestionsResponse);
 }
 
 message LeanNode {
@@ -112,4 +113,13 @@ message SamplingInfo {
   bool was_sampled = 1;
   int32 original_node_count = 2;
   int32 sampled_node_count = 3;
+}
+
+message GetNodeSuggestionsRequest {
+  string query = 1;
+  int32 max_suggestions = 2;
+}
+
+message GetNodeSuggestionsResponse {
+  repeated string suggestions = 1;
 }

@@ -28,6 +28,8 @@ import type {
   GetDependencyNodesAndEdgesResponse,
   GetDependentNodesAndEdgesRequest,
   GetDependentNodesAndEdgesResponse,
+  GetNodeSuggestionsRequest,
+  GetNodeSuggestionsResponse,
 } from "./gen/state_search/v1/state_search_pb";
 
 const grpcOptions: GrpcTransportOptions = {
@@ -85,3 +87,8 @@ export const getDependentNodesAndEdges: (
 ) => Promise<PlainMessage<GetDependentNodesAndEdgesResponse>> = async (
   request,
 ) => toPlainMessage(await leanGraphServicer.getDependentNodesAndEdges(request));
+
+export const getNodeSuggestions: (
+  request: PlainMessage<GetNodeSuggestionsRequest>,
+) => Promise<PlainMessage<GetNodeSuggestionsResponse>> = async (request) =>
+  toPlainMessage(await leanGraphServicer.getNodeSuggestions(request));

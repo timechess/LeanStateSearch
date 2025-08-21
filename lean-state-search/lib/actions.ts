@@ -1,9 +1,11 @@
 "use server";
 
+import { cache } from "react";
 import {
   click,
   getDependencyNodesAndEdges,
   getDependentNodesAndEdges,
+  getNodeSuggestions,
 } from "./grpc";
 
 export async function copyTheorem(
@@ -32,4 +34,11 @@ export async function fetchDependencyData(name: string) {
 
 export async function fetchDependentData(name: string) {
   return await getDependentNodesAndEdges({ name });
+}
+
+export async function fetchNodeSuggestions(
+  query: string,
+  maxSuggestions: number = 10,
+) {
+  return await getNodeSuggestions({ query, maxSuggestions });
 }

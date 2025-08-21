@@ -275,6 +275,11 @@ class LeanGraphServiceStub(object):
                 request_serializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesRequest.SerializeToString,
                 response_deserializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesResponse.FromString,
                 _registered_method=True)
+        self.GetNodeSuggestions = channel.unary_unary(
+                '/state_search.v1.LeanGraphService/GetNodeSuggestions',
+                request_serializer=state__search_dot_v1_dot_state__search__pb2.GetNodeSuggestionsRequest.SerializeToString,
+                response_deserializer=state__search_dot_v1_dot_state__search__pb2.GetNodeSuggestionsResponse.FromString,
+                _registered_method=True)
 
 
 class LeanGraphServiceServicer(object):
@@ -292,6 +297,12 @@ class LeanGraphServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetNodeSuggestions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_LeanGraphServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -304,6 +315,11 @@ def add_LeanGraphServiceServicer_to_server(servicer, server):
                     servicer.GetDependentNodesAndEdges,
                     request_deserializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesRequest.FromString,
                     response_serializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesResponse.SerializeToString,
+            ),
+            'GetNodeSuggestions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetNodeSuggestions,
+                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.GetNodeSuggestionsRequest.FromString,
+                    response_serializer=state__search_dot_v1_dot_state__search__pb2.GetNodeSuggestionsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -360,6 +376,33 @@ class LeanGraphService(object):
             '/state_search.v1.LeanGraphService/GetDependentNodesAndEdges',
             state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesRequest.SerializeToString,
             state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetNodeSuggestions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/state_search.v1.LeanGraphService/GetNodeSuggestions',
+            state__search_dot_v1_dot_state__search__pb2.GetNodeSuggestionsRequest.SerializeToString,
+            state__search_dot_v1_dot_state__search__pb2.GetNodeSuggestionsResponse.FromString,
             options,
             channel_credentials,
             insecure,
