@@ -108,27 +108,55 @@ class LeanNode(_message.Message):
     def __init__(self, name: _Optional[str] = ..., const_category: _Optional[str] = ..., const_type: _Optional[str] = ..., module: _Optional[str] = ..., doc_string: _Optional[str] = ..., informal_name: _Optional[str] = ..., informal_statement: _Optional[str] = ...) -> None: ...
 
 class LeanEdge(_message.Message):
-    __slots__ = ("id", "source", "target", "weight")
+    __slots__ = ("id", "source", "target", "edge_type")
     ID_FIELD_NUMBER: _ClassVar[int]
     SOURCE_FIELD_NUMBER: _ClassVar[int]
     TARGET_FIELD_NUMBER: _ClassVar[int]
-    WEIGHT_FIELD_NUMBER: _ClassVar[int]
+    EDGE_TYPE_FIELD_NUMBER: _ClassVar[int]
     id: str
     source: str
     target: str
-    weight: int
-    def __init__(self, id: _Optional[str] = ..., source: _Optional[str] = ..., target: _Optional[str] = ..., weight: _Optional[int] = ...) -> None: ...
+    edge_type: str
+    def __init__(self, id: _Optional[str] = ..., source: _Optional[str] = ..., target: _Optional[str] = ..., edge_type: _Optional[str] = ...) -> None: ...
 
-class GetNodesAndEdgesRequest(_message.Message):
+class GetDependencyNodesAndEdgesRequest(_message.Message):
     __slots__ = ("name",)
     NAME_FIELD_NUMBER: _ClassVar[int]
     name: str
     def __init__(self, name: _Optional[str] = ...) -> None: ...
 
-class GetNodesAndEdgesResponse(_message.Message):
-    __slots__ = ("nodes", "edges")
+class GetDependencyNodesAndEdgesResponse(_message.Message):
+    __slots__ = ("nodes", "edges", "sampling_info")
     NODES_FIELD_NUMBER: _ClassVar[int]
     EDGES_FIELD_NUMBER: _ClassVar[int]
+    SAMPLING_INFO_FIELD_NUMBER: _ClassVar[int]
     nodes: _containers.RepeatedCompositeFieldContainer[LeanNode]
     edges: _containers.RepeatedCompositeFieldContainer[LeanEdge]
-    def __init__(self, nodes: _Optional[_Iterable[_Union[LeanNode, _Mapping]]] = ..., edges: _Optional[_Iterable[_Union[LeanEdge, _Mapping]]] = ...) -> None: ...
+    sampling_info: SamplingInfo
+    def __init__(self, nodes: _Optional[_Iterable[_Union[LeanNode, _Mapping]]] = ..., edges: _Optional[_Iterable[_Union[LeanEdge, _Mapping]]] = ..., sampling_info: _Optional[_Union[SamplingInfo, _Mapping]] = ...) -> None: ...
+
+class GetDependentNodesAndEdgesRequest(_message.Message):
+    __slots__ = ("name",)
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class GetDependentNodesAndEdgesResponse(_message.Message):
+    __slots__ = ("nodes", "edges", "sampling_info")
+    NODES_FIELD_NUMBER: _ClassVar[int]
+    EDGES_FIELD_NUMBER: _ClassVar[int]
+    SAMPLING_INFO_FIELD_NUMBER: _ClassVar[int]
+    nodes: _containers.RepeatedCompositeFieldContainer[LeanNode]
+    edges: _containers.RepeatedCompositeFieldContainer[LeanEdge]
+    sampling_info: SamplingInfo
+    def __init__(self, nodes: _Optional[_Iterable[_Union[LeanNode, _Mapping]]] = ..., edges: _Optional[_Iterable[_Union[LeanEdge, _Mapping]]] = ..., sampling_info: _Optional[_Union[SamplingInfo, _Mapping]] = ...) -> None: ...
+
+class SamplingInfo(_message.Message):
+    __slots__ = ("was_sampled", "original_node_count", "sampled_node_count")
+    WAS_SAMPLED_FIELD_NUMBER: _ClassVar[int]
+    ORIGINAL_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
+    SAMPLED_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
+    was_sampled: bool
+    original_node_count: int
+    sampled_node_count: int
+    def __init__(self, was_sampled: bool = ..., original_node_count: _Optional[int] = ..., sampled_node_count: _Optional[int] = ...) -> None: ...

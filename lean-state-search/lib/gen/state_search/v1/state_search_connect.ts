@@ -3,20 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import {
-  CallRequest,
-  CallResponse,
-  ClickRequest,
-  ClickResponse,
-  FeedbackRequest,
-  FeedbackResponse,
-  GetAllRevRequest,
-  GetAllRevResponse,
-  GetNodesAndEdgesRequest,
-  GetNodesAndEdgesResponse,
-  SearchTheoremRequest,
-  SearchTheoremResponse,
-} from "./state_search_pb.ts";
+import { CallRequest, CallResponse, ClickRequest, ClickResponse, FeedbackRequest, FeedbackResponse, GetAllRevRequest, GetAllRevResponse, GetDependencyNodesAndEdgesRequest, GetDependencyNodesAndEdgesResponse, GetDependentNodesAndEdgesRequest, GetDependentNodesAndEdgesResponse, SearchTheoremRequest, SearchTheoremResponse } from "./state_search_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -80,7 +67,7 @@ export const LeanStateSearchService = {
       O: CallResponse,
       kind: MethodKind.Unary,
     },
-  },
+  }
 } as const;
 
 /**
@@ -90,13 +77,23 @@ export const LeanGraphService = {
   typeName: "state_search.v1.LeanGraphService",
   methods: {
     /**
-     * @generated from rpc state_search.v1.LeanGraphService.GetNodesAndEdges
+     * @generated from rpc state_search.v1.LeanGraphService.GetDependencyNodesAndEdges
      */
-    getNodesAndEdges: {
-      name: "GetNodesAndEdges",
-      I: GetNodesAndEdgesRequest,
-      O: GetNodesAndEdgesResponse,
+    getDependencyNodesAndEdges: {
+      name: "GetDependencyNodesAndEdges",
+      I: GetDependencyNodesAndEdgesRequest,
+      O: GetDependencyNodesAndEdgesResponse,
       kind: MethodKind.Unary,
     },
-  },
+    /**
+     * @generated from rpc state_search.v1.LeanGraphService.GetDependentNodesAndEdges
+     */
+    getDependentNodesAndEdges: {
+      name: "GetDependentNodesAndEdges",
+      I: GetDependentNodesAndEdgesRequest,
+      O: GetDependentNodesAndEdgesResponse,
+      kind: MethodKind.Unary,
+    },
+  }
 } as const;
+

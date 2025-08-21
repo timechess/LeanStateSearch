@@ -265,17 +265,28 @@ class LeanGraphServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetNodesAndEdges = channel.unary_unary(
-                '/state_search.v1.LeanGraphService/GetNodesAndEdges',
-                request_serializer=state__search_dot_v1_dot_state__search__pb2.GetNodesAndEdgesRequest.SerializeToString,
-                response_deserializer=state__search_dot_v1_dot_state__search__pb2.GetNodesAndEdgesResponse.FromString,
+        self.GetDependencyNodesAndEdges = channel.unary_unary(
+                '/state_search.v1.LeanGraphService/GetDependencyNodesAndEdges',
+                request_serializer=state__search_dot_v1_dot_state__search__pb2.GetDependencyNodesAndEdgesRequest.SerializeToString,
+                response_deserializer=state__search_dot_v1_dot_state__search__pb2.GetDependencyNodesAndEdgesResponse.FromString,
+                _registered_method=True)
+        self.GetDependentNodesAndEdges = channel.unary_unary(
+                '/state_search.v1.LeanGraphService/GetDependentNodesAndEdges',
+                request_serializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesRequest.SerializeToString,
+                response_deserializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesResponse.FromString,
                 _registered_method=True)
 
 
 class LeanGraphServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetNodesAndEdges(self, request, context):
+    def GetDependencyNodesAndEdges(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetDependentNodesAndEdges(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -284,10 +295,15 @@ class LeanGraphServiceServicer(object):
 
 def add_LeanGraphServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetNodesAndEdges': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetNodesAndEdges,
-                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.GetNodesAndEdgesRequest.FromString,
-                    response_serializer=state__search_dot_v1_dot_state__search__pb2.GetNodesAndEdgesResponse.SerializeToString,
+            'GetDependencyNodesAndEdges': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDependencyNodesAndEdges,
+                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.GetDependencyNodesAndEdgesRequest.FromString,
+                    response_serializer=state__search_dot_v1_dot_state__search__pb2.GetDependencyNodesAndEdgesResponse.SerializeToString,
+            ),
+            'GetDependentNodesAndEdges': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDependentNodesAndEdges,
+                    request_deserializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesRequest.FromString,
+                    response_serializer=state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -301,7 +317,7 @@ class LeanGraphService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetNodesAndEdges(request,
+    def GetDependencyNodesAndEdges(request,
             target,
             options=(),
             channel_credentials=None,
@@ -314,9 +330,36 @@ class LeanGraphService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/state_search.v1.LeanGraphService/GetNodesAndEdges',
-            state__search_dot_v1_dot_state__search__pb2.GetNodesAndEdgesRequest.SerializeToString,
-            state__search_dot_v1_dot_state__search__pb2.GetNodesAndEdgesResponse.FromString,
+            '/state_search.v1.LeanGraphService/GetDependencyNodesAndEdges',
+            state__search_dot_v1_dot_state__search__pb2.GetDependencyNodesAndEdgesRequest.SerializeToString,
+            state__search_dot_v1_dot_state__search__pb2.GetDependencyNodesAndEdgesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetDependentNodesAndEdges(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/state_search.v1.LeanGraphService/GetDependentNodesAndEdges',
+            state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesRequest.SerializeToString,
+            state__search_dot_v1_dot_state__search__pb2.GetDependentNodesAndEdgesResponse.FromString,
             options,
             channel_credentials,
             insecure,

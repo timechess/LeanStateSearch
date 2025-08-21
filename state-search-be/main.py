@@ -32,9 +32,7 @@ async def serve() -> None:
     add_LeanStateSearchServiceServicer_to_server(
         LeanStateSearchServicer(db=db, vb=vb), server
     )
-    add_LeanGraphServiceServicer_to_server(
-        LeanGraphServicer(file_path=os.getenv("LEANGRAPH_FILE_PATH")), server
-    )
+    add_LeanGraphServiceServicer_to_server(LeanGraphServicer(db=db), server)
 
     listen_addr = f"[::]:{os.getenv('BACKEND_PORT')}"
     server.add_insecure_port(listen_addr)

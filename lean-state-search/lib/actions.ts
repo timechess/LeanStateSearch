@@ -1,6 +1,10 @@
 "use server";
 
-import { click } from "./grpc";
+import {
+  click,
+  getDependencyNodesAndEdges,
+  getDependentNodesAndEdges,
+} from "./grpc";
 
 export async function copyTheorem(
   query: string,
@@ -20,4 +24,12 @@ export async function goToDoc(query: string, theorem_id: string, rank: number) {
     theoremId: theorem_id,
     rank,
   });
+}
+
+export async function fetchDependencyData(name: string) {
+  return await getDependencyNodesAndEdges({ name });
+}
+
+export async function fetchDependentData(name: string) {
+  return await getDependentNodesAndEdges({ name });
 }

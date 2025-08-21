@@ -43,3 +43,20 @@ model Call {
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
+
+model LeanNode {
+  name               String @id
+  const_category     String
+  const_type         String
+  module             String
+  doc_string         String
+  informal_name      String
+  informal_statement String
+}
+
+model LeanEdge {
+  id        String @id
+  source    String
+  target    String
+  edge_type String
+}

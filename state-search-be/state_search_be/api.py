@@ -4,7 +4,6 @@ from state_search_be.state_search.v1.state_search_pb2_grpc import (
     LeanStateSearchServiceServicer,
 )
 from state_search_be.state_search.v1.state_search_pb2 import (
-    GetNodesAndEdgesRequest,
     SearchTheoremRequest,
     SearchTheoremResponse,
     FeedbackRequest,
@@ -17,17 +16,67 @@ from state_search_be.state_search.v1.state_search_pb2 import (
     Theorem,
     LeanEdge as ProtoLeanEdge,
     LeanNode as ProtoLeanNode,
-    GetNodesAndEdgesResponse,
+    GetDependencyNodesAndEdgesRequest,
+    GetDependencyNodesAndEdgesResponse,
+    GetDependentNodesAndEdgesRequest,
+    GetDependentNodesAndEdgesResponse,
+    SamplingInfo,
 )
 from dotenv import load_dotenv
 import re
+import random
 from .flag_model import FlagModel
 from prisma import Prisma
 from prisma.errors import RawQueryError
 from qdrant_client import QdrantClient
-from lean_graph_tool import LeanGraph
 
 load_dotenv()
+
+
+def random_sample_with_target(nodes, edges, target_name, max_nodes=50):
+    """
+    Randomly sample nodes ensuring the target node is always included.
+    Returns sampled nodes, edges, and sampling information.
+    """
+    original_count = len(nodes)
+
+    if len(nodes) <= max_nodes:
+        return nodes, edges, {
+            'was_sampled': False,
+            'original_node_count': original_count,
+            'sampled_node_count': len(nodes)
+        }
+
+    # Find the target node
+    target_node = None
+    for node in nodes:
+        if node.name == target_name:
+            target_node = node
+            break
+
+    if not target_node:
+        # If target node not found, just do random sampling
+        sampled_nodes = random.sample(nodes, max_nodes)
+    else:
+        # Always include the target node
+        other_nodes = [n for n in nodes if n.name != target_name]
+        sampled_others = random.sample(other_nodes, max_nodes - 1)
+        sampled_nodes = [target_node] + sampled_others
+
+    # Create set of sampled node names for efficient lookup
+    sampled_names = {node.name for node in sampled_nodes}
+
+    # Filter edges to only include those between sampled nodes
+    sampled_edges = [
+        edge for edge in edges
+        if edge.source in sampled_names and edge.target in sampled_names
+    ]
+
+    return sampled_nodes, sampled_edges, {
+        'was_sampled': True,
+        'original_node_count': original_count,
+        'sampled_node_count': len(sampled_nodes)
+    }
 
 
 class LeanStateSearchServicer(LeanStateSearchServiceServicer):
@@ -148,47 +197,26 @@ class LeanStateSearchServicer(LeanStateSearchServiceServicer):
 
 
 class LeanGraphServicer(LeanGraphServiceServicer):
-    def __init__(self, file_path: str):
-        self.file_path = file_path
-        self.graph = LeanGraph.load_from_json(file_path)
+    def __init__(self, db: Prisma):
+        self.db = db
 
-    async def GetNodesAndEdges(self, request: GetNodesAndEdgesRequest, context):
-        name = request.name
-        node = self.graph.get_by_name(name)
-        body_deps = self.graph.get_body_deps_by_name(name)
-        type_deps = self.graph.get_type_deps_by_name(name)
-        body_edges = [
-            ProtoLeanEdge(
-                id=f"body_{name}->{dep.name}",
-                source=name,
-                target=dep.name,
-                weight=1,
-            )
-            for dep in body_deps
-        ]
-        type_edges = [
-            ProtoLeanEdge(
-                id=f"type_{name}->{dep.name}",
-                source=name,
-                target=dep.name,
-                weight=0,
-            )
-            for dep in type_deps
-        ]
-        nodes = [
+    async def GetDependencyNodesAndEdges(
+        self, request: GetDependencyNodesAndEdgesRequest, context
+    ):
+        node = await self.db.leannode.find_first(where={"name": request.name})
+        if node is None:
+            return GetDependencyNodesAndEdgesResponse(nodes=[], edges=[])
+
+        edges = await self.db.leanedge.find_many(where={"source": node.name})
+
+        nodes = await self.db.leannode.find_many(
+            where={"name": {"in": [edge.target for edge in edges]}}
+        )
+
+        # Create proto nodes for dependency targets
+        proto_nodes = [
             ProtoLeanNode(
-                name=dep.name,
-                const_category=dep.const_category,
-                const_type=dep.const_type,
-                module=dep.module,
-                doc_string=dep.doc_string,
-                informal_name=dep.informal_name,
-                informal_statement=dep.informal_statement,
-            )
-            for dep in body_deps + type_deps
-        ] + [
-            ProtoLeanNode(
-                name=name,
+                name=node.name,
                 const_category=node.const_category,
                 const_type=node.const_type,
                 module=node.module,
@@ -196,5 +224,114 @@ class LeanGraphServicer(LeanGraphServiceServicer):
                 informal_name=node.informal_name,
                 informal_statement=node.informal_statement,
             )
+            for node in nodes
         ]
-        return GetNodesAndEdgesResponse(nodes=nodes, edges=body_edges + type_edges)
+
+        # Add the target node itself to the list
+        proto_nodes.append(
+            ProtoLeanNode(
+                name=node.name,
+                const_category=node.const_category,
+                const_type=node.const_type,
+                module=node.module,
+                doc_string=node.doc_string,
+                informal_name=node.informal_name,
+                informal_statement=node.informal_statement,
+            )
+        )
+
+        proto_edges = [
+            ProtoLeanEdge(
+                id=edge.id,
+                source=edge.source,
+                target=edge.target,
+                edge_type=edge.edge_type,
+            )
+            for edge in edges
+        ]
+
+        # Apply sampling if needed
+        sampled_nodes, sampled_edges, sampling_data = random_sample_with_target(
+            proto_nodes, proto_edges, request.name
+        )
+
+        # Create sampling info
+        sampling_info = SamplingInfo(
+            was_sampled=sampling_data['was_sampled'],
+            original_node_count=sampling_data['original_node_count'],
+            sampled_node_count=sampling_data['sampled_node_count']
+        )
+
+        return GetDependencyNodesAndEdgesResponse(
+            nodes=sampled_nodes,
+            edges=sampled_edges,
+            sampling_info=sampling_info,
+        )
+
+    async def GetDependentNodesAndEdges(
+        self, request: GetDependentNodesAndEdgesRequest, context
+    ):
+        node = await self.db.leannode.find_first(where={"name": request.name})
+        if node is None:
+            return GetDependencyNodesAndEdgesResponse(nodes=[], edges=[])
+
+        edges = await self.db.leanedge.find_many(where={"target": node.name})
+
+        nodes = await self.db.leannode.find_many(
+            where={"name": {"in": [edge.source for edge in edges]}}
+        )
+
+        # Create proto nodes for dependent sources
+        proto_nodes = [
+            ProtoLeanNode(
+                name=node.name,
+                const_category=node.const_category,
+                const_type=node.const_type,
+                module=node.module,
+                doc_string=node.doc_string,
+                informal_name=node.informal_name,
+                informal_statement=node.informal_statement,
+            )
+            for node in nodes
+        ]
+
+        # Add the target node itself to the list
+        proto_nodes.append(
+            ProtoLeanNode(
+                name=node.name,
+                const_category=node.const_category,
+                const_type=node.const_type,
+                module=node.module,
+                doc_string=node.doc_string,
+                informal_name=node.informal_name,
+                informal_statement=node.informal_statement,
+            )
+        )
+
+        proto_edges = [
+            ProtoLeanEdge(
+                id=edge.id,
+                source=edge.source,
+                target=edge.target,
+                edge_type=edge.edge_type,
+            )
+            for edge in edges
+        ]
+
+        # Apply sampling if needed
+        sampled_nodes, sampled_edges, sampling_data = random_sample_with_target(
+            proto_nodes, proto_edges, request.name
+        )
+
+        # Create sampling info
+        sampling_info = SamplingInfo(
+            was_sampled=sampling_data['was_sampled'],
+            original_node_count=sampling_data['original_node_count'],
+            sampled_node_count=sampling_data['sampled_node_count']
+        )
+
+        return GetDependentNodesAndEdgesResponse(
+            nodes=sampled_nodes,
+            edges=sampled_edges,
+            sampling_info=sampling_info,
+        )

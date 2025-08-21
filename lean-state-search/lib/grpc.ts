@@ -8,7 +8,10 @@ import { createClient, Client } from "@connectrpc/connect";
 
 import { toPlainMessage, type PlainMessage } from "@bufbuild/protobuf";
 
-import { LeanGraphService, LeanStateSearchService } from "./gen/state_search/v1/state_search_connect";
+import {
+  LeanGraphService,
+  LeanStateSearchService,
+} from "./gen/state_search/v1/state_search_connect";
 
 import type {
   GetAllRevRequest,
@@ -21,8 +24,10 @@ import type {
   ClickResponse,
   CallRequest,
   CallResponse,
-  GetNodesAndEdgesResponse,
-  GetNodesAndEdgesRequest,
+  GetDependencyNodesAndEdgesRequest,
+  GetDependencyNodesAndEdgesResponse,
+  GetDependentNodesAndEdgesRequest,
+  GetDependentNodesAndEdgesResponse,
 } from "./gen/state_search/v1/state_search_pb";
 
 const grpcOptions: GrpcTransportOptions = {
@@ -38,8 +43,10 @@ const transport = createGrpcTransport(grpcOptions);
 const leanStateSearchServicer: Client<typeof LeanStateSearchService> =
   createClient(LeanStateSearchService, transport);
 
-const leanGraphServicer: Client<typeof LeanGraphService> =
-  createClient(LeanGraphService, transport);
+const leanGraphServicer: Client<typeof LeanGraphService> = createClient(
+  LeanGraphService,
+  transport,
+);
 
 export const getAllRev: (
   request: PlainMessage<GetAllRevRequest>,
@@ -66,7 +73,15 @@ export const call: (
 ) => Promise<PlainMessage<CallResponse>> = async (request) =>
   toPlainMessage(await leanStateSearchServicer.call(request));
 
-export const getNodesAndEdges: (
-  request: PlainMessage<GetNodesAndEdgesRequest>,
-) => Promise<PlainMessage<GetNodesAndEdgesResponse>> = async (request) =>
-  toPlainMessage(await leanGraphServicer.getNodesAndEdges(request));
+export const getDependencyNodesAndEdges: (
+  request: PlainMessage<GetDependencyNodesAndEdgesRequest>,
+) => Promise<PlainMessage<GetDependencyNodesAndEdgesResponse>> = async (
+  request,
+) =>
+  toPlainMessage(await leanGraphServicer.getDependencyNodesAndEdges(request));
+
+export const getDependentNodesAndEdges: (
+  request: PlainMessage<GetDependentNodesAndEdgesRequest>,
+) => Promise<PlainMessage<GetDependentNodesAndEdgesResponse>> = async (
+  request,
+) => toPlainMessage(await leanGraphServicer.getDependentNodesAndEdges(request));
