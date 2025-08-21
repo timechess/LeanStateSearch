@@ -6,7 +6,7 @@
     with pkgs; ([
         libiconv
         openssl
-        poetry
+        uv
         ruff
         bashInteractive
         alejandra
