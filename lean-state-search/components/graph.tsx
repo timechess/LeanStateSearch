@@ -4,7 +4,7 @@ import { LeanEdge, LeanNode } from "@/lib/gen/state_search/v1/state_search_pb";
 import { PlainMessage } from "@bufbuild/protobuf";
 import dynamic from "next/dynamic";
 import { Markdown } from "./markdown";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchDependencyData, fetchDependentData } from "@/lib/actions";
 
 // Backend now handles sampling, so this function is no longer needed
@@ -58,6 +58,9 @@ export default function Graph({
     type: "node" | "edge";
     data: PlainMessage<LeanNode> | PlainMessage<LeanEdge>;
   } | null>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(384); // Default width: 384px (w-96)
+  const [isResizing, setIsResizing] = useState(false);
+  const resizeRef = useRef<HTMLDivElement>(null);
 
   const fetchData = async (mode: "dependency" | "dependent") => {
     setIsLoading(true);
@@ -116,6 +119,32 @@ export default function Graph({
     fill: getEdgeColor(edge.edgeType),
     data: edge,
   }));
+
+  // Handle mouse move for resizing
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+
+      const newWidth = window.innerWidth - e.clientX;
+      // Constrain width between 300px and 800px
+      const constrainedWidth = Math.max(300, Math.min(800, newWidth));
+      setSidebarWidth(constrainedWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   return (
     <>
@@ -320,7 +349,19 @@ export default function Graph({
 
       {/* Right Sidebar for Node/Edge Information */}
       {selectedItem && (
-        <div className="fixed right-0 top-0 h-full w-96 bg-white border-l border-gray-200 shadow-lg overflow-y-auto z-50">
+        <div
+          className="fixed right-0 top-0 h-full bg-white border-l border-gray-200 shadow-lg overflow-y-auto z-50"
+          style={{ width: `${sidebarWidth}px` }}
+        >
+          {/* Resize Handle */}
+          <div
+            ref={resizeRef}
+            className="absolute left-0 top-0 w-1 h-full cursor-col-resize bg-gray-300 hover:bg-gray-400 transition-colors"
+            onMouseDown={() => setIsResizing(true)}
+          >
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-gray-400 rounded-full"></div>
+          </div>
+
           <div className="p-6">
             {/* Header */}
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
